@@ -12,17 +12,19 @@ in rec {
     CLANGPP_PATH = pkgs.clang + "/bin/clang++";
     IDEA_JDK = pkgs.openjdk + "/lib/openjdk";
     buildInputs = with pkgs; [
-      stdenv
-      sbt
-      openjdk
+      ammonite
       boehmgc
+      clang
       emacs
+      jetbrains.idea-ultimate
       less
       libunwind
+      openjdk
       re2
-      clang
+      sbt
+      stdenv
+      unzip
       zlib
-      ammonite
     ];
   };
 } 

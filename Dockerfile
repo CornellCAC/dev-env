@@ -20,9 +20,9 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends bzip2 ca-cer
 RUN echo "nixbld:x:30000:nixbld1,nixbld2,nixbld3,nixbld4,nixbld5,nixbld6,nixbld7,nixbld8,nixbld9,nixbld10,nixbld11,nixbld12,nixbld13,nixbld14,nixbld15,nixbld16,nixbld17,nixbld18,nixbld19,nixbld20,nixbld21,nixbld22,nixbld23,nixbld24,nixbld25,nixbld26,nixbld27,nixbld28,nixbld29,nixbld30" >> /etc/group \
   && for i in $(seq 1 30); do echo "nixbld$i:x:$((30000 + $i)):30000:::" >> /etc/passwd; done 
 
-# ADD https://download.jetbrains.com/idea/ideaIU-2017.2.3-no-jdk.tar.gz /opt/
-RUN cd /opt && wget https://download.jetbrains.com/idea/ideaIU-2017.2.3-no-jdk.tar.gz && \
-  tar xvf ideaIU*.tar.gz && rm ideaIU*.tar.gz && ln -sf /opt/idea-IU* /opt/idea
+# Commenting out in favor of using nixpkg for idea
+# RUN cd /opt && wget https://download.jetbrains.com/idea/ideaIU-2017.2.3-no-jdk.tar.gz && \
+#   tar xvf ideaIU*.tar.gz && rm ideaIU*.tar.gz && ln -sf /opt/idea-IU* /opt/idea
 
 
 #
@@ -54,17 +54,13 @@ ENV \
 
 ENV nixenv ". /home/$nixuser/.nix-profile/etc/profile.d/nix.sh"
 
-RUN $nixenv && nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+RUN $nixenv && nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs && \
+  nix-channel --add https://nixos.org/channels/nixos-unstable nixos
   
 RUN $nixenv && nix-channel --update
 
-
-# $ nix-shell scala-native.nix -A scalaEnv
-
 COPY ./scala-default.nix ./scala-build.sh $envsdir/
-# RUN $nixenv && nix-build ./scala-default.nix 
-
-USER $nixuser
+COPY ./config.nix $envsdir/.config/nixpkgs/
 
 #
 # Initialize environment a bit for faster container spinup/use later
