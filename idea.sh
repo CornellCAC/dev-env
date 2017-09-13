@@ -14,7 +14,7 @@ WORK_DIR="$HOME/${WORKSPACE}"
 # Need to give the container access to your windowing system
 # Further reading: http://wiki.ros.org/docker/Tutorials/GUI
 # and http://gernotklingler.com/blog/howto-get-hardware-accelerated-opengl-support-docker/
-DISPLAY=:0
+export DISPLAY=:0
 xhost +
 
 PULL="docker pull ${IDEA_IMAGE}"
@@ -27,7 +27,13 @@ ${PULL}
 # from within the container, but since this is a likely
 # scenario, I'll leave it in as a --volume mount for now
 
-CMD="docker run --group-add ${DOCKER_GROUP_ID} \
+#
+# Might consider using nvidia-docker instead of docker
+# once support is suomehow added for Ubuntu 16.04 (manually or inherited)
+#
+
+CMD="docker run --detach=true \
+                --group-add ${DOCKER_GROUP_ID} \
                 --env HOME=${HOME} \
                 --env DISPLAY=unix${DISPLAY} \
                 --interactive \
@@ -43,4 +49,13 @@ CMD="docker run --group-add ${DOCKER_GROUP_ID} \
                 ${IDEA_IMAGE}"
 
 echo $CMD
-$CMD
+CONTAINER=$($CMD)
+
+# Minor post-configuration
+docker exec --user=root -it $CONTAINER groupadd -g $DOCKER_GROUP_ID docker
+docker exec --user=root -it $CONTAINER bash -c 'chmod u+w /etc/machine-id && \
+    runuser -l brandon -c "dbus-uuidgen" > /etc/machine-id  && \
+    chmod u-w /etc/machine-id
+'
+
+docker attach $CONTAINER

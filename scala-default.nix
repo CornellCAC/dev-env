@@ -6,8 +6,10 @@ buildEnv {
     ammonite
     boehmgc
     clang
+    dbus # needed non-explicitly by vscode
     emacs
-    idea.idea-ultimate
+    git
+    # idea.idea-ultimate # disabled temporarily
     less
     libunwind
     openjdk
@@ -15,11 +17,14 @@ buildEnv {
     sbt
     stdenv
     unzip
+    vscode
     zlib
   ];
   buildInputs = [ makeWrapper ];
+  # TODO: better filter, use ammonite script?:
   postBuild = ''
-  for f in $(ls -d $out/bin/*); do
+  for f in $(ls -d $out/bin/* | grep "idea"); do
+    sed -i '/IDEA_JDK/d' $f
     wrapProgram $f \
       --set IDEA_JDK "/usr/lib/jvm/zulu-8-amd64" \
       --set CLANG_PATH "${clang}/bin/clang" \
