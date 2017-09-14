@@ -1,0 +1,8 @@
+/.config/syncthing
+/.config/nixpkgs
+// workspace is handled by git repos, etc:
+/workspace
+.sbt
+.ivy2
+/.nix*
+/nix-*

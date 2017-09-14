@@ -13,7 +13,9 @@ buildEnv {
     less
     libunwind
     openjdk
+    openssh
     re2
+    rsync
     sbt
     stdenv
     syncthing # for syncrhonizing data between containers

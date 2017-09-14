@@ -4,17 +4,15 @@
 
 # IDEA_IMAGE=${1:-kurron/docker-intellij:latest}
 
-WORKSPACE=workspace
 DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
 USER_ID=$(id -u $(whoami))
 GROUP_ID=$(id -g $(whoami))
 HOME_DIR=$(cut -d: -f6 < <(getent passwd ${USER_ID}))
-WORK_DIR="$HOME/${WORKSPACE}"
-
+HOME_DIR_HOST="${HOME_DIR}/DevContainerHome"
 #
 # Create sync config dir owned by user if not already
 #
-mkdir -p $HOME/.config/syncthing
+mkdir -p $HOME_DIR_HOST/.config/syncthing
 
 # Need to give the container access to your windowing system
 # Further reading: http://wiki.ros.org/docker/Tutorials/GUI
@@ -39,19 +37,17 @@ ${PULL}
 
 CMD="docker run --detach=true \
                 --group-add ${DOCKER_GROUP_ID} \
-                --env HOME=${HOME} \
+                --env HOME=${HOME_DIR} \
                 --env DISPLAY=unix${DISPLAY} \
                 --interactive \
-                --name IntelliJ \
+                --name DevContainer \
                 --net "host" \
                 --rm \
                 --tty \
                 --user=${USER_ID}:${GROUP_ID} \
-                --volume $WORK_DIR:${WORK_DIR} \
-                --volume $HOME_DIR/.config/syncthing:${HOME_DIR}/.config/syncthing \
+                --volume $HOME_DIR_HOST:${HOME_DIR} \
                 --volume /tmp/.X11-unix:/tmp/.X11-unix \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
-                --workdir ${HOME} \
                 ${IDEA_IMAGE}"
 
 echo $CMD
