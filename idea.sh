@@ -11,6 +11,11 @@ GROUP_ID=$(id -g $(whoami))
 HOME_DIR=$(cut -d: -f6 < <(getent passwd ${USER_ID}))
 WORK_DIR="$HOME/${WORKSPACE}"
 
+#
+# Create sync config dir owned by user if not already
+#
+mkdir -p $HOME/.config/syncthing
+
 # Need to give the container access to your windowing system
 # Further reading: http://wiki.ros.org/docker/Tutorials/GUI
 # and http://gernotklingler.com/blog/howto-get-hardware-accelerated-opengl-support-docker/
@@ -43,6 +48,7 @@ CMD="docker run --detach=true \
                 --tty \
                 --user=${USER_ID}:${GROUP_ID} \
                 --volume $WORK_DIR:${WORK_DIR} \
+                --volume $HOME_DIR/.config/syncthing:${HOME_DIR}/.config/syncthing \
                 --volume /tmp/.X11-unix:/tmp/.X11-unix \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
                 --workdir ${HOME} \
@@ -52,10 +58,13 @@ echo $CMD
 CONTAINER=$($CMD)
 
 # Minor post-configuration
-docker exec --user=root -it $CONTAINER groupadd -g $DOCKER_GROUP_ID docker
-docker exec --user=root -it $CONTAINER bash -c 'chmod u+w /etc/machine-id && \
-    runuser -l brandon -c "dbus-uuidgen" > /etc/machine-id  && \
+docker exec --user=root $CONTAINER groupadd -g $DOCKER_GROUP_ID docker
+WHO_AM_I=$(docker exec --user=$USER_ID $CONTAINER whoami)
+echo "whoami is ${WHO_AM_I}"
+
+docker exec --user=root $CONTAINER bash -c "chmod u+w /etc/machine-id && \
+    runuser -l ${WHO_AM_I} -c 'dbus-uuidgen' > /etc/machine-id && \
     chmod u-w /etc/machine-id
-'
+"
 
 docker attach $CONTAINER
