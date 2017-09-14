@@ -16,6 +16,7 @@ buildEnv {
     re2
     sbt
     stdenv
+    syncthing # for syncrhonizing data between containers
     unzip
     vscode
     zlib

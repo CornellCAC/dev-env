@@ -1,3 +1,4 @@
 #!/bin/bash
 source $HOME/.nix-profile/etc/profile.d/nix.sh
+syncthing -gui-address 0.0.0.0:8384 &
 /bin/bash

@@ -56,6 +56,8 @@ COPY ./entrypoint ./scala-default.nix ./scala-build.sh $ENVSDIR/
 #
 # Initialize environment a bit for faster container spinup/use later
 #
-RUN $nixenv && cd /tmp && nix-env -if $ENVSDIR/scala-default.nix && printf 'exit\n' | sbt
+RUN $nixenv && cd /tmp && nix-env -if $ENVSDIR/scala-default.nix && printf 'exit\n' | sbt && \
+  printf '\nsource $HOME/.nix-profile/etc/profile.d/nix.sh\n' >> $HOME/.bashrc
 
 CMD ["./entrypoint"]
+
