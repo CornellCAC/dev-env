@@ -2,9 +2,10 @@
 SOURCE_NIX="source $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
 ${SOURCE_NIX}
 rsync -a $HOME_TEMPLATE/ $HOME
-grep -q -F "${SOURCE_NIX}" $HOME/.bashrc || printf $SOURCE_NIX >> $HOME/.bashrc
-PS1_MOD="\nexport PS1=\"${PS1}(DevContainer)$\"\n"
-grep -q -F "${PS1_MOD}" $HOME/.bashrc || printf $PS1_MOD >> $HOME/.bashrc
+grep -q -F "${SOURCE_NIX}" $HOME/.bashrc || printf "\n$SOURCE_NIX\n" >> $HOME/.bashrc
+PS1_MOD="export PS1=${PS1}(DevContainer)\$\w"
+${PS1_MOD}
+grep -q -F "${PS1_MOD}" $HOME/.bashrc || printf "\n$PS1_MOD\n" >> $HOME/.bashrc
 touch $HOME/.stignore && \
 grep -q -F '#include .home_sync_ignore' $HOME/.stignore || echo '#include .home_sync_ignore' >> $HOME/.stignore
 syncthing -gui-address 0.0.0.0:8384 &

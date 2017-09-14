@@ -8,7 +8,8 @@ DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
 USER_ID=$(id -u $(whoami))
 GROUP_ID=$(id -g $(whoami))
 HOME_DIR=$(cut -d: -f6 < <(getent passwd ${USER_ID}))
-HOME_DIR_HOST="${HOME_DIR}/DevContainerHome"
+HOME_DIR_HOST="$HOME_DIR/DevContainerHome"
+WORK_DIR="$HOME_DIR/workspace"
 #
 # Create sync config dir owned by user if not already
 #
@@ -46,6 +47,7 @@ CMD="docker run --detach=true \
                 --tty \
                 --user=${USER_ID}:${GROUP_ID} \
                 --volume $HOME_DIR_HOST:${HOME_DIR} \
+                --volume $WORK_DIR:${WORK_DIR} \
                 --volume /tmp/.X11-unix:/tmp/.X11-unix \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
                 ${IDEA_IMAGE}"
@@ -54,13 +56,14 @@ echo $CMD
 CONTAINER=$($CMD)
 
 # Minor post-configuration
+sleep 1s
 docker exec --user=root $CONTAINER groupadd -g $DOCKER_GROUP_ID docker
 WHO_AM_I=$(docker exec --user=$USER_ID $CONTAINER whoami)
 echo "whoami is ${WHO_AM_I}"
 
+DBUS_UUID=$(docker exec $CONTAINER /bin/bash -i -c 'dbus-uuidgen')
 docker exec --user=root $CONTAINER bash -c "chmod u+w /etc/machine-id && \
-    runuser -l ${WHO_AM_I} -c 'dbus-uuidgen' > /etc/machine-id && \
+    echo ${DBUS_UUID} > /etc/machine-id && \
     chmod u-w /etc/machine-id
 "
-
 docker attach $CONTAINER
