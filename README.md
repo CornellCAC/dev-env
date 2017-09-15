@@ -17,6 +17,8 @@ Docker will automatically install the newly built image into the cache.
 
 ## Launching The Image
 
+The image launches several processes (see the `entrypoint` script), but the final process executed in the script is `tmux`, which allows you to open multiple shells - however, you may want to change this, especially if using it on a server where you are already using `tmux`.
+
 ### Docker Compose
 
 `docker-compose up` will launch the image allowing you to begin working on projects. The Docker Compose file is configured to mount your home directory into the container.  

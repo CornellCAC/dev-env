@@ -9,4 +9,4 @@ grep -q -F "${PS1_MOD}" $HOME/.bashrc || printf "\n$PS1_MOD\n" >> $HOME/.bashrc
 touch $HOME/.stignore && \
 grep -q -F '#include .home_sync_ignore' $HOME/.stignore || echo '#include .home_sync_ignore' >> $HOME/.stignore
 syncthing -gui-address 0.0.0.0:8384 &
-/bin/bash
+tmux
