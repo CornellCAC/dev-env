@@ -10,6 +10,7 @@ let
       ln -sf $out/idea-IU* $out/idea
       ln -sf $out/idea/bin/idea.sh $out/bin/idea
     '';
+    # Note shellHooks is not used by nix-env
     shellHook = ''
       IDEA_JDK=/usr/lib/jvm/zulu-8-amd64
     '';
@@ -52,13 +53,13 @@ in { scalaEnv = buildEnv {
   buildInputs = [ makeWrapper ];
   # TODO: better filter, use ammonite script?:
   postBuild = ''
-  for f in $(ls -d $out/bin/* | grep "idea"); do
-    sed -i '/IDEA_JDK/d' $f
-    wrapProgram $f \
-      --set IDEA_JDK "/usr/lib/jvm/zulu-8-amd64" \
-      --set CLANG_PATH "${clang}/bin/clang" \
-      --set CLANCPP_PATH "${clang}/bin/clang++"
-    done
+  # for f in $(ls -d $out/bin/* | grep "idea"); do
+  #   sed -i '/IDEA_JDK/d' $f
+  #   wrapProgram $f \
+  #     --set IDEA_JDK "/usr/lib/jvm/zulu-8-amd64" \
+  #     --set CLANG_PATH "${clang}/bin/clang" \
+  #     --set CLANCPP_PATH "${clang}/bin/clang++"
+  #   done
   '';
 
 };}

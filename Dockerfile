@@ -24,7 +24,7 @@ RUN echo "nixbld:x:30000:nixbld1,nixbld2,nixbld3,nixbld4,nixbld5,nixbld6,nixbld7
   && for i in $(seq 1 30); do echo "nixbld$i:x:$((30000 + $i)):30000:::" >> /etc/passwd; done 
 
 COPY ./config.nix $HOME/.config/nixpkgs/
-COPY ./scala-default.nix ./scala-build.sh $ENVSDIR/
+COPY ./scala-default.nix $ENVSDIR/
 COPY ./.home_sync_ignore $HOME/
 RUN chown -R $nixuser:$nixuser $ENVSDIR $HOME
 

@@ -8,5 +8,10 @@ ${PS1_MOD}
 grep -q -F "${PS1_MOD}" $HOME/.bashrc || printf "\n$PS1_MOD\n" >> $HOME/.bashrc
 touch $HOME/.stignore && \
 grep -q -F '#include .home_sync_ignore' $HOME/.stignore || echo '#include .home_sync_ignore' >> $HOME/.stignore
+
+# A temporary fix: need a more Nix way to do this, e.g. in postBuild hook:
+SET_IDEA_JDK="export IDEA_JDK=/usr/lib/jvm/zulu-8-amd64"
+grep -q -F "${SET_IDEA_JDK}" $HOME/.bashrc || printf "\n$SET_IDEA_JDK\n" >> $HOME/.bashrc
+
 syncthing -gui-address 0.0.0.0:8384 &
 tmux
