@@ -4,6 +4,13 @@
 
 # IDEA_IMAGE=${1:-kurron/docker-intellij:latest}
 
+DOCKER=docker
+if [ -x "$(command -v nvidia-docker)" ]; then
+    DOCKER=nvidia-docker
+fi
+echo "DOCKER cmd is $DOCKER"
+
+    
 DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
 USER_ID=$(id -u $(whoami))
 GROUP_ID=$(id -g $(whoami))
@@ -36,7 +43,7 @@ ${PULL}
 # once support is suomehow added for Ubuntu 16.04 (manually or inherited)
 #
 
-CMD="docker run --detach=true \
+CMD="${DOCKER} run --detach=true \
                 --group-add ${DOCKER_GROUP_ID} \
                 --env HOME=${HOME_DIR} \
                 --env DISPLAY=unix${DISPLAY} \

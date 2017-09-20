@@ -1,6 +1,4 @@
-FROM azul/zulu-openjdk:latest
-#FROM kurron/docker-azul-jdk-8-build:latest
-#FROM ubuntu:16.04
+FROM nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
 
 ARG nixuser
 ENV ENVSDIR /nixenv/$nixuser
@@ -18,6 +16,24 @@ RUN adduser --disabled-password --gecos "" $nixuser && \
   
 RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
   apt-get update -y && apt-get install -y --no-install-recommends bzip2 ca-certificates wget && \
+  apt-get clean
+
+#
+# UTF-8 by default
+#
+RUN apt-get install locales && \
+  locale-gen en_US.UTF-8 
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+#
+# Pull Zulu OpenJDK binaries from official repository:
+#
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9 && \
+  echo "deb http://repos.azulsystems.com/ubuntu stable main" >> /etc/apt/sources.list.d/zulu.list && \
+  apt-get -qqy update && \
+  apt-get -qqy install zulu-8=8.23.0.3 && \
   apt-get clean
 
 RUN echo "nixbld:x:30000:nixbld1,nixbld2,nixbld3,nixbld4,nixbld5,nixbld6,nixbld7,nixbld8,nixbld9,nixbld10,nixbld11,nixbld12,nixbld13,nixbld14,nixbld15,nixbld16,nixbld17,nixbld18,nixbld19,nixbld20,nixbld21,nixbld22,nixbld23,nixbld24,nixbld25,nixbld26,nixbld27,nixbld28,nixbld29,nixbld30" >> /etc/group \
