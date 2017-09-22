@@ -16,6 +16,9 @@ USER_ID=$(id -u $(whoami))
 GROUP_ID=$(id -g $(whoami))
 HOME_DIR=$(cut -d: -f6 < <(getent passwd ${USER_ID}))
 HOME_DIR_HOST="$HOME_DIR/DevContainerHome"
+#
+#TODO: pass WORK_DIR and REPO_DIR (this repo) to container environment
+#
 WORK_DIR="$HOME_DIR/workspace"
 #
 # Create sync config dir owned by user if not already
@@ -32,11 +35,6 @@ PULL="docker pull ${IDEA_IMAGE}"
 
 echo ${PULL}
 ${PULL}
-
-# I assume we don't actually need /var/run/docker.sock
-# unless we are dealing with doing docker development
-# from within the container, but since this is a likely
-# scenario, I'll leave it in as a --volume mount for now
 
 #
 # Might consider using nvidia-docker instead of docker

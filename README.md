@@ -24,7 +24,7 @@ Docker will automatically install the newly built image into the cache.
 
 ## Launching The Image
 
-The image launches several processes (see the `entrypoint` script), but the final process executed in the script is the `emacs` editor/environment, which allows you to open multiple shells (using `ansi-term`) and buffers - however, you may want to change this, especially if you are not familiar with `emacs`.
+The image launches several processes (see the `entrypoint` script), but the final process executed in the script is the `emacs` editor/environment, which allows you to open multiple shells (using `ansi-term`) and buffers - however, you may want to change this, especially if you are not familiar with `emacs`. This is an alternative to `screen` and `tmux`, which are also good options (but aren't editors) - `docker attach DevContainer` can be used in place of `tmux attach` to resume the `emacs` session from another system.
 
 ### Docker Compose
 

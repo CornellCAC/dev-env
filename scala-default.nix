@@ -25,6 +25,7 @@ in { scalaEnv = buildEnv {
     ammonite
     boehmgc
     clang
+    docker
     dbus # needed non-explicitly by vscode
     emacs
     git
