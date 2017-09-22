@@ -13,11 +13,18 @@ Alternatively run `source build.sh`.
 # Installation
 Docker will automatically install the newly built image into the cache.
 
+# Assumptions
+ As this is still in active development and primarily meant as a single example (everyone has a slightly different, or sometimes drastically different, development environment) rather than something that is meant to be used out of the box, there are a few assumptions that may be generified at a later time. Most of these should be easy to manually adjust (otherwise I would not leave them as assumptions):
+
+1. workspace dir (for hosting projects) is located on the host at `$HOME/workspace`
+2. this project repo is located at `$HOME/workspace/docker-nix-intellij`
+
+
 # Tips and Tricks
 
 ## Launching The Image
 
-The image launches several processes (see the `entrypoint` script), but the final process executed in the script is `tmux`, which allows you to open multiple shells - however, you may want to change this, especially if using it on a server where you are already using `tmux`.
+The image launches several processes (see the `entrypoint` script), but the final process executed in the script is the `emacs` editor/environment, which allows you to open multiple shells (using `ansi-term`) and buffers - however, you may want to change this, especially if you are not familiar with `emacs`.
 
 ### Docker Compose
 

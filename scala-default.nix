@@ -39,7 +39,6 @@ in { scalaEnv = buildEnv {
     sbt
     stdenv
     syncthing # for syncrhonizing data between containers
-    tmux
     unzip
     vscode
     zlib
