@@ -13,5 +13,7 @@ SET_DYNAMIC_ENV="source $HOME/workspace/docker-nix-intellij/nix-env-dynamic.sh"
 ${SET_DYNAMIC_ENV}
 grep -q -F "${SET_DYNAMIC_ENV}" $HOME/.bashrc || printf "\n$SET_DYNAMIC_ENV\n" >> $HOME/.bashrc
 
-syncthing -gui-address 0.0.0.0:8384 &
+touch /tmp/syncthing.log
+mv -b /tmp/syncthing.log /tmp/syncthing.log.1
+syncthing -gui-address 0.0.0.0:8384 2>&1 > /tmp/syncthing.log &
 emacs -nw
