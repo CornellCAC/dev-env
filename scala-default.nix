@@ -23,12 +23,14 @@ in { scalaEnv = buildEnv {
   name = "scala-env";
   paths = [
     ammonite
+    # bash-completion # disabled, using system bash
     boehmgc
     clang
     docker
     dbus # needed non-explicitly by vscode
     emacs
     git
+    git-lfs
     # idea.idea-ultimate # disabled temporarily
     ideaLocal
     less

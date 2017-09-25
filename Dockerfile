@@ -16,7 +16,8 @@ RUN adduser --disabled-password --gecos "" $nixuser && \
   
 RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
   apt-get update -y && apt-get install -y --no-install-recommends bzip2 ca-certificates wget && \
-  apt-get clean
+  apt-get clean && \
+  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/
 
 #
 # UTF-8 by default
