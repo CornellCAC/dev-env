@@ -15,8 +15,8 @@ let
       IDEA_JDK=/usr/lib/jvm/zulu-8-amd64
     '';
     src = fetchurl {
-      url = https://download.jetbrains.com/idea/ideaIU-2017.2.4-no-jdk.tar.gz;
-      sha256 = "15a4799ffde294d0f2fce0b735bbfe370e3d0327380a0efc45905241729898e3";
+      url = https://download.jetbrains.com/idea/ideaIU-2017.2.5-no-jdk.tar.gz;
+      sha256 = "6649ec545093be46ebf2bf2d76e4b67597b2c92ea9ad80fe354db130994de45e";
     };
   };
 in { scalaEnv = buildEnv {
@@ -35,15 +35,19 @@ in { scalaEnv = buildEnv {
     ideaLocal
     less
     libunwind
+    nodejs
     openjdk
     openssh
+    phantomjs2
     re2
     rsync
     sbt
+    scala
     stdenv
     syncthing # for syncrhonizing data between containers
     unzip
     vscode
+    yarn
     zlib
   ];
   # builder = builtins.toFile "builder.sh" ''

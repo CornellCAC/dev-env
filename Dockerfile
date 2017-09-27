@@ -12,6 +12,7 @@ RUN adduser --disabled-password --gecos "" $nixuser && \
   echo "$nixuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
   mkdir -m 0755 /nix && \
   mkdir -p $HOME_TEMPLATE && \
+  mkdir -p /run/user/$(id -u $nixuser) && chown $nixuser:$nixuser /run/user/$(id -u $nixuser) && \
   chown -R $nixuser:$nixuser /nix $ENVSDIR $HOME $HOME_TEMPLATE
   
 RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
