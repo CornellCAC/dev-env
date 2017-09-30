@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BASH_COMPLETIONS="source /etc/bash_completion.d/*.bash"
-${BASH_COMPLETIONS}
+eval $BASH_COMPLETIONS
 
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
