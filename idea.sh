@@ -42,12 +42,13 @@ ${PULL}
 #
 
 CMD="${DOCKER} run --detach=true \
+                --privileged \
                 --group-add ${DOCKER_GROUP_ID} \
                 --env HOME=${HOME_DIR} \
-                --env DISPLAY=unix${DISPLAY} \
+                --env DISPLAY \
                 --interactive \
                 --name DevContainer \
-                --net "host" \
+                --net=host \
                 --rm \
                 --tty \
                 --user=${USER_ID}:${GROUP_ID} \

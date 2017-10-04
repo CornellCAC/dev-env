@@ -55,7 +55,7 @@ RUN apt-get install -y --no-install-recommends x11-apps && \
 USER $nixuser
 
 RUN wget -O- http://nixos.org/releases/nix/nix-1.11.14/nix-1.11.14-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
-    && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install \
+    && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install
 
 ENV \
     PATH=$ENVSDIR/.nix-profile/bin:$ENVSDIR/.nix-profile/sbin:/bin:/sbin:/usr/bin:/usr/sbin \

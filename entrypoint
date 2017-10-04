@@ -3,7 +3,7 @@ SOURCE_NIX="source $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
 ${SOURCE_NIX}
 rsync -a $HOME_TEMPLATE/ $HOME
 grep -q -F "${SOURCE_NIX}" $HOME/.bashrc || printf "\n$SOURCE_NIX\n" >> $HOME/.bashrc
-PS1_MOD='export PS1='\''\u@\h-DevContainer:\w\$ '\'''
+PS1_MOD='export PS1='\''\u@\h-DevContainer:\w\n\$ '\'''
 eval $PS1_MOD
 grep -q -F "${PS1_MOD}" $HOME/.bashrc || printf "\n$PS1_MOD\n" >> $HOME/.bashrc
 touch $HOME/.stignore && \
