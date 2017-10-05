@@ -57,9 +57,14 @@ USER $nixuser
 RUN wget -O- http://nixos.org/releases/nix/nix-1.11.14/nix-1.11.14-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
     && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install
 
+
+#
+# This broke at some point, so trying system certs for now:
+# GIT_SSL_CAINFO=$ENVSDIR/.nix-profile/etc/ssl/certs/ca-bundle.crt \
+# 
 ENV \
     PATH=$ENVSDIR/.nix-profile/bin:$ENVSDIR/.nix-profile/sbin:/bin:/sbin:/usr/bin:/usr/sbin \
-    GIT_SSL_CAINFO=$ENVSDIR/.nix-profile/etc/ssl/certs/ca-bundle.crt \
+    GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt \
     NIX_SSL_CERT_FILE=$ENVSDIR/.nix-profile/etc/ssl/certs/ca-bundle.crt \
     NIX_PATH=/nix/var/nix/profiles/per-user/$ENVSDIR/channels/
   
