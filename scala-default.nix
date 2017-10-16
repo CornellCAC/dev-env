@@ -19,6 +19,21 @@ let
       sha256 = "6649ec545093be46ebf2bf2d76e4b67597b2c92ea9ad80fe354db130994de45e";
     };
   };
+  dottyLocal = stdenv.mkDerivation {
+    name = "dotty-local";
+    buildInputs =  [ ];
+    builder = builtins.toFile "builder.sh" ''
+      source $stdenv/setup
+      mkdir -p $out/bin
+      tar zxvf $src -C $out/
+      ln -sf $out/dotty-* $out/dotty
+      ln -sf $out/dotty/bin/* $out/bin/
+    '';
+    src = fetchurl {
+      url = https://github.com/lampepfl/dotty/releases/download/0.3.0-RC2/dotty-0.3.0-RC2.tar.gz;
+      sha256 = "1359843e19ac25b1dc465bfb61d84aeb507476bca57a46d90a111454e123ab29";
+    };
+  };
 in { scalaEnv = buildEnv {
   name = "scala-env";
   paths = [
@@ -27,6 +42,7 @@ in { scalaEnv = buildEnv {
     boehmgc
     clang
     docker
+    dottyLocal # (Tentative Scala 3 compiler)
     dbus # needed non-explicitly by vscode
     emacs
     git
@@ -35,6 +51,7 @@ in { scalaEnv = buildEnv {
     ideaLocal
     less
     libunwind
+    maven
     nodejs
     openjdk
     openssh
