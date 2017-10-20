@@ -66,6 +66,15 @@ in { scalaEnv = buildEnv {
     vscode
     yarn
     zlib
+
+    #
+    # Python support:
+    #
+    python36Full
+    python36Packages.virtualenv
+    python36Packages.pip
+    # nixpip # installed seperately: https://github.com/badi/nix-pip
+    
   ];
   # builder = builtins.toFile "builder.sh" ''
   #   source $stdenv/setup

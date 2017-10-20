@@ -52,6 +52,7 @@ CMD="${DOCKER} run --detach=true \
                 --rm \
                 --tty \
                 --user=${USER_ID}:${GROUP_ID} \
+                --volume /usr/local/MATLAB/R2017b:/opt/MATLAB \
                 --volume $HOME_DIR_HOST:${HOME_DIR} \
                 --volume $WORK_DIR:${WORK_DIR} \
                 --volume /tmp/.X11-unix:/tmp/.X11-unix \
