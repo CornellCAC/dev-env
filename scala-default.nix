@@ -47,6 +47,7 @@ in { scalaEnv = buildEnv {
     emacs
     git
     git-lfs
+    gnupg
     # idea.idea-ultimate # disabled temporarily
     ideaLocal
     less
