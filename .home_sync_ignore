@@ -2,8 +2,11 @@
 /.config/nixpkgs
 // workspace is handled by git repos, etc:
 /workspace
-/.sbt
+!/.sbt/gpg*
+/.sbt/*
 /.ivy2
-/.m2
+!.m2/settings.xml
+!.m2/sonatype.xml
+/.m2/*
 /.nix*
 /nix-*
