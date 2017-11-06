@@ -74,6 +74,7 @@ in { scalaEnv = buildEnv {
     python36Full
     python36Packages.virtualenv
     python36Packages.pip
+    python36Packages.ipython
     # nixpip # installed seperately: https://github.com/badi/nix-pip
     
   ];
