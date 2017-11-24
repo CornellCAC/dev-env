@@ -78,7 +78,7 @@ RUN $nixenv && nix-channel --update
 #
 # Initialize environment a bit for faster container spinup/use later
 #
-RUN $nixenv && cd /tmp && nix-env --fallback -if $ENVSDIR/scala-default.nix && printf 'exit\n' | sbt && \
+RUN $nixenv && cd /tmp && nix-env --fallback -if $ENVSDIR/scala-default.nix && printf 'exit\n' | sbt -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2 && \
   rsync -a $HOME/ $HOME_TEMPLATE
 
 
