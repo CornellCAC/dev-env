@@ -34,6 +34,21 @@ let
       sha256 = "1359843e19ac25b1dc465bfb61d84aeb507476bca57a46d90a111454e123ab29";
     };
   };
+  herokuLocal = stdenv.mkDerivation {
+    name = "heroku-local";
+    buildInputs =  [ ];
+    builder = builtins.toFile "builder.sh" ''
+      source $stdenv/setup
+      mkdir -p $out/bin
+      tar zxvf $src -C $out/
+      ln -sf $out/heroku-* $out/heroku
+      ln -sf $out/heroku/bin/* $out/bin/
+    '';
+    src = fetchurl {
+      url = https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz;
+      sha256 = "d6b8217ce15f3ba61a1872b8b95f353fdde1f03f885a0eb99141e45ae7426516";
+    };
+  };  
 in { scalaEnv = buildEnv {
   name = "scala-env";
   paths = [
@@ -42,12 +57,13 @@ in { scalaEnv = buildEnv {
     boehmgc
     clang
     docker
-    dottyLocal # (Tentative Scala 3 compiler)
+    dotty # (Tentative Scala 3 compiler; see dottyLocal above for alternative)
     dbus # needed non-explicitly by vscode
     emacs
     git
     git-lfs
     gnupg
+    herokuLocal
     # idea.idea-ultimate # disabled temporarily
     ideaLocal
     less
