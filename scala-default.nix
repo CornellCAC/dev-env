@@ -63,9 +63,9 @@ in { scalaEnv = buildEnv {
     git
     git-lfs
     gnupg
-    herokuLocal
-    # idea.idea-ultimate # disabled temporarily
-    ideaLocal
+    # herokuLocal # no stable versioning/checksum
+    idea.idea-ultimate # disabled temporarily
+    # ideaLocal
     less
     libunwind
     maven
