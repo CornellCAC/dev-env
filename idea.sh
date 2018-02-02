@@ -15,6 +15,10 @@ DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
 USER_ID=$(id -u $(whoami))
 GROUP_ID=$(id -g $(whoami))
 HOME_DIR=$(cut -d: -f6 < <(getent passwd ${USER_ID}))
+#
+# Fixme: this is unsafe if building image within
+# the container the container, as you get $HOME_DIR/DevContainerHome/DevContainerHome
+#
 HOME_DIR_HOST="$HOME_DIR/DevContainerHome"
 #
 #TODO: pass WORK_DIR and REPO_DIR (this repo) to container environment
