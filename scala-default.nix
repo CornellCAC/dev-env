@@ -53,6 +53,7 @@ in { scalaEnv = buildEnv {
   name = "scala-env";
   paths = [
     ammonite
+    awscli
     # bash-completion # disabled, using system bash
     boehmgc
     clang
