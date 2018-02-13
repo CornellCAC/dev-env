@@ -69,6 +69,7 @@ in { scalaEnv = buildEnv {
     less
     libunwind
     maven
+    mlton
     nodejs
     openjdk
     openssh
