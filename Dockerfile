@@ -55,7 +55,7 @@ RUN apt-get install -y --no-install-recommends x11-apps && \
 
 USER $nixuser
 
-RUN wget -O- http://nixos.org/releases/nix/nix-1.11.15/nix-1.11.15-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
+RUN wget -O- http://nixos.org/releases/nix/nix-1.11.16/nix-1.11.16-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
     && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install
 
 
@@ -67,7 +67,7 @@ ENV \
     PATH=$ENVSDIR/.nix-profile/bin:$ENVSDIR/.nix-profile/sbin:/bin:/sbin:/usr/bin:/usr/sbin \
     GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt \
     NIX_SSL_CERT_FILE=$ENVSDIR/.nix-profile/etc/ssl/certs/ca-bundle.crt \
-    NIX_PATH=/nix/var/nix/profiles/per-user/$ENVSDIR/channels/
+    NIX_PATH=/nix/var/nix/profiles/per-user/$nixuser/channels/
   
 ENV nixenv ". $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
 
