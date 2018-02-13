@@ -1,3 +1,4 @@
+#FROM ubuntu:16.04
 FROM nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
 
 ARG nixuser
