@@ -87,12 +87,13 @@ in { scalaEnv = buildEnv {
     zlib
 
     #
-    # Python support:
+    # Python support
     #
-    python36Full
-    python36Packages.virtualenv
-    python36Packages.pip
-    python36Packages.ipython
+    # Disabling the following until pipenv works
+    # python36Full
+    # python36Packages.virtualenv
+    # python36Packages.pip
+    # python36Packages.ipython
     # nixpip # installed seperately: https://github.com/badi/nix-pip
     
   ];
