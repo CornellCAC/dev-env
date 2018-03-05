@@ -19,7 +19,7 @@ RUN adduser --disabled-password --gecos "" $nixuser && \
 RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
   apt-get update -y && apt-get install -y --no-install-recommends wget && \
   wget -O spc.deb http://launchpadlibrarian.net/249551255/software-properties-common_0.96.20_all.deb && \
-  dpkg -i spc.deb; rm -f spc.deb &&  apt-get install -y -f && \
+  dpkg -i spc.deb; rm -f spc.deb && apt-get install -y -f && \
   apt-get install -y --no-install-recommends bzip2 ca-certificates wget && \
   apt-get clean && \
   wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/
@@ -41,10 +41,10 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9
   add-apt-repository ppa:deadsnakes/ppa && \
   apt-get -qqy update && \
   apt-get -qqy install zulu-8=8.23.0.3 && \
-  apt-get -qqy install python3.6 python3.6-dev python3.6-venv && \
+  apt-get -qqy install python3.6 python3.6-dev python3.6-venv && apt-get install -y -f && \
   apt-get clean
 
-RUN wget -O /usr/local/bin/mill https://github.com/lihaoyi/mill/releases/download/0.1.3/0.1.3 && \
+RUN wget -O /usr/local/bin/mill https://github.com/lihaoyi/mill/releases/download/0.1.4/0.1.4 && \
   chmod a+x /usr/local/bin/mill
 
 RUN echo "nixbld:x:30000:nixbld1,nixbld2,nixbld3,nixbld4,nixbld5,nixbld6,nixbld7,nixbld8,nixbld9,nixbld10,nixbld11,nixbld12,nixbld13,nixbld14,nixbld15,nixbld16,nixbld17,nixbld18,nixbld19,nixbld20,nixbld21,nixbld22,nixbld23,nixbld24,nixbld25,nixbld26,nixbld27,nixbld28,nixbld29,nixbld30" >> /etc/group \
