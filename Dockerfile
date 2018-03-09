@@ -16,11 +16,14 @@ RUN adduser --disabled-password --gecos "" $nixuser && \
   mkdir -p /run/user/$(id -u $nixuser) && chown $nixuser:$nixuser /run/user/$(id -u $nixuser) && \
   chown -R $nixuser:$nixuser /nix $ENVSDIR $HOME $HOME_TEMPLATE
 
+#
+# TODO: remove GCC when moving back to nix python
+#
 RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
   apt-get update -y && apt-get install -y --no-install-recommends wget && \
   wget -O spc.deb http://launchpadlibrarian.net/249551255/software-properties-common_0.96.20_all.deb && \
   dpkg -i spc.deb; rm -f spc.deb && apt-get install -y -f && \
-  apt-get install -y --no-install-recommends bzip2 ca-certificates wget && \
+  apt-get install -y --no-install-recommends bzip2 ca-certificates gcc wget && \
   apt-get clean && \
   wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/
 #

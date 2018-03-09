@@ -53,6 +53,7 @@ in { scalaEnv = buildEnv {
   name = "scala-env";
   paths = [
     ammonite
+    ats2
     awscli
     # bash-completion # disabled, using system bash
     boehmgc
@@ -81,6 +82,7 @@ in { scalaEnv = buildEnv {
     scala
     stdenv
     syncthing # for syncrhonizing data between containers
+    tinycc # For ATS2 scripting
     unzip
     vscode
     yarn
