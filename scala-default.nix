@@ -64,6 +64,7 @@ in { scalaEnv = buildEnv {
     emacs
     git
     git-lfs
+    gnumake
     gnupg
     # herokuLocal # no stable versioning/checksum
     idea.idea-ultimate # disabled temporarily
