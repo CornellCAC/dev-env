@@ -53,7 +53,7 @@ in { scalaEnv = buildEnv {
   name = "scala-env";
   paths = [
     ammonite
-    ats2
+    ats2 # Plan to use bleeding edge for now
     awscli
     # bash-completion # disabled, using system bash
     boehmgc
@@ -68,6 +68,7 @@ in { scalaEnv = buildEnv {
     gnupg
     # herokuLocal # no stable versioning/checksum
     idea.idea-ultimate # disabled temporarily
+    idris
     # ideaLocal
     less
     libunwind
