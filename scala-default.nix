@@ -74,7 +74,7 @@ in { scalaEnv = buildEnv {
     libunwind
     maven
     mlton
-    nodejs
+    nodejs-8_x
     openjdk
     openssh
     phantomjs2
