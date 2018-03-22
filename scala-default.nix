@@ -53,7 +53,8 @@ in { scalaEnv = buildEnv {
   name = "scala-env";
   paths = [
     ammonite
-    ats2 # Plan to use bleeding edge for now
+    ats # Needed to bootstrap ats2
+    # ats2 # Plan to use bleeding edge for now
     awscli
     # bash-completion # disabled, using system bash
     boehmgc
