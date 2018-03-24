@@ -63,6 +63,7 @@ in { scalaEnv = buildEnv {
     dotty # (Tentative Scala 3 compiler; see dottyLocal above for alternative)
     dbus # needed non-explicitly by vscode
     emacs
+    gdb
     git
     git-lfs
     gnumake
