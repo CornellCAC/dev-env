@@ -48,7 +48,7 @@ let
       url = https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz;
       sha256 = "d6b8217ce15f3ba61a1872b8b95f353fdde1f03f885a0eb99141e45ae7426516";
     };
-  };  
+  };
 in { scalaEnv = buildEnv {
   name = "scala-env";
   paths = [
@@ -81,6 +81,7 @@ in { scalaEnv = buildEnv {
     openssh
     phantomjs2
     re2
+    rlwrap
     rsync
     sbt
     scala
@@ -88,6 +89,7 @@ in { scalaEnv = buildEnv {
     syncthing # for syncrhonizing data between containers
     tinycc # For ATS2 scripting
     unzip
+    # visualvm # character issues currently, likely needs idea-jdk
     vscode
     yarn
     zlib
