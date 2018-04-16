@@ -81,7 +81,6 @@ in { scalaEnv = buildEnv {
     openssh
     phantomjs2
     re2
-    rlwrap
     rsync
     sbt
     scala
