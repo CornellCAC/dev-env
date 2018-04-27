@@ -12,8 +12,8 @@ echo "DOCKER cmd is $DOCKER"
 
     
 DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
-USER_ID=$(id -u $(whoami))
-GROUP_ID=$(id -g $(whoami))
+USER_ID=$(id -u "$(whoami)")
+GROUP_ID=$(id -g "$(whoami)")
 HOME_DIR=$(cut -d: -f6 < <(getent passwd ${USER_ID}))
 #
 # Fixme: this is unsafe if building image within

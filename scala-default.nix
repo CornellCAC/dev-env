@@ -68,6 +68,7 @@ in { scalaEnv = buildEnv {
     git-lfs
     gnumake
     gnupg
+    gradle
     # herokuLocal # no stable versioning/checksum
     idea.idea-ultimate # disabled temporarily
     idris
@@ -84,6 +85,7 @@ in { scalaEnv = buildEnv {
     rsync
     sbt
     scala
+    shellcheck
     stdenv
     syncthing # for syncrhonizing data between containers
     tinycc # For ATS2 scripting
@@ -93,6 +95,13 @@ in { scalaEnv = buildEnv {
     yarn
     zlib
 
+    #
+    #Haskell/Eta support
+    #
+    ghc # use stack instead, once working
+    stack # The Haskell tool stack
+    haskellPackages.hpack
+    
     #
     # Python support
     #
