@@ -43,6 +43,9 @@ ${PULL}
 # once support is suomehow added for Ubuntu 16.04 (manually or inherited)
 #
 
+#                --cap-add net_raw \
+#                --cap-add net_admin \
+
 CMD="${DOCKER} run --detach=true \
                 --privileged \
                 --group-add ${DOCKER_GROUP_ID} \
