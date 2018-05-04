@@ -87,8 +87,6 @@ RUN $nixenv && nix-channel --add https://nixos.org/channels/nixpkgs-unstable nix
   
 RUN $nixenv && nix-channel --update
 
-
-
 #
 # Initialize environment a bit for faster container spinup/use later
 #
