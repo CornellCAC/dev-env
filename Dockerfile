@@ -66,9 +66,9 @@ RUN apt-get install -y --no-install-recommends x11-apps && \
 
 USER $nixuser
 
-RUN wget -O- http://nixos.org/releases/nix/nix-1.11.16/nix-1.11.16-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
-    && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install
-
+RUN wget -O- http://nixos.org/releases/nix/nix-2.0.1/nix-2.0.1-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
+    && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install \
+    && ln -s /nix/var/nix/profiles/per-user/$nixuser/profile $HOME/.nix-profile
 
 #
 # This broke at some point, so trying system certs for now:
@@ -77,7 +77,7 @@ RUN wget -O- http://nixos.org/releases/nix/nix-1.11.16/nix-1.11.16-x86_64-linux.
 ENV \
     PATH=$ENVSDIR/.nix-profile/bin:$ENVSDIR/.nix-profile/sbin:/bin:/sbin:/usr/bin:/usr/sbin \
     GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt \
-    NIX_SSL_CERT_FILE=$ENVSDIR/.nix-profile/etc/ssl/certs/ca-bundle.crt \
+    NIX_SSL_CERT_FILE=$GIT_SSL_CAINFO \
     NIX_PATH=/nix/var/nix/profiles/per-user/$nixuser/channels/
   
 ENV nixenv ". $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
@@ -90,8 +90,11 @@ RUN $nixenv && nix-channel --update
 #
 # Initialize environment a bit for faster container spinup/use later
 #
-RUN $nixenv && cd /tmp && nix-env --fallback -if $ENVSDIR/scala-default.nix && \
-  printf 'exit\n' | sbt -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2 && \
+RUN $nixenv && cd /tmp && nix-env --fallback -if $ENVSDIR/scala-default.nix
+#
+RUN $nixenv && echo `which sbt`
+#
+RUN $nixenv && printf 'exit\n' | sbt -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2 && \
   rsync -a $HOME/ $HOME_TEMPLATE
 
 
