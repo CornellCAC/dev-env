@@ -1,4 +1,5 @@
 with import <nixpkgs> { };
+# with import ../nixpkgs { }; # For testing local nixpkgs clone, swap with above
 let
   ideaLocal = stdenv.mkDerivation {
     name = "idea-local";
@@ -66,6 +67,7 @@ in { scalaEnv = buildEnv {
     gdb
     git
     git-lfs
+    # git-secrets
     gnumake
     gnupg
     gradle
