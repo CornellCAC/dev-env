@@ -122,6 +122,8 @@ in { scalaEnv = buildEnv {
   buildInputs = [ makeWrapper ];
   # TODO: better filter, use ammonite script?:
   postBuild = ''
+    # we remove a dead symbolic link, which currently causes nix to break:
+    rm $out/lib/libunwind-generic.a
   # for f in $(ls -d $out/bin/* | grep "idea"); do
   #   sed -i '/IDEA_JDK/d' $f
   #   wrapProgram $f \

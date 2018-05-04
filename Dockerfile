@@ -67,8 +67,8 @@ RUN apt-get install -y --no-install-recommends x11-apps && \
 USER $nixuser
 
 RUN wget -O- http://nixos.org/releases/nix/nix-2.0.1/nix-2.0.1-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
-    && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install
-
+    && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install \
+    && ln -s /nix/var/nix/profiles/per-user/$nixuser/profile $HOME/.nix-profile
 
 #
 # This broke at some point, so trying system certs for now:
