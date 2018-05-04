@@ -1,6 +1,7 @@
 *~
 *#
 *.#
+.#*
 .idea
 **/gurobi.log
 /packages/**/result
