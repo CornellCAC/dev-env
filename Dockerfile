@@ -26,14 +26,6 @@ RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
   apt-get install -y --no-install-recommends bzip2 ca-certificates gcc wget && \
   apt-get clean && \
   wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/
-#
-# UTF-8 by default
-#
-RUN apt-get install locales && \
-  locale-gen en_US.UTF-8 
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
 
 #
 # Pull Zulu OpenJDK and Python3.6 binaries from repositories:
