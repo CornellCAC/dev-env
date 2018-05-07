@@ -44,7 +44,7 @@ A nix expression that defines the development environment (or individual express
 
 ```sh
 # link to mounted volume repo:
-ln -s workspace/docker-nix-intellij/scala-default.nix ~/default.nix
+ln -s workspace/docker-nix-intellij/dev-env.nix ~/default.nix
 nix-env -f ~/default.nix -i # update environment
 ```
 

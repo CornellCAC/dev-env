@@ -61,6 +61,11 @@ CMD="${DOCKER} run --detach=true \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
                 ${IDEA_IMAGE}"
 
+#
+# TODO: dbus:
+#
+#                 --volume /var/run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
+
 echo $CMD
 CONTAINER=$($CMD)
 
