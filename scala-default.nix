@@ -1,5 +1,8 @@
 with import <nixpkgs> { };
-# with import ../nixpkgs { }; # For testing local nixpkgs clone, swap with above
+# For testing local nixpkgs clone, swap with above
+# with import ((builtins.getEnv "HOME") + "/workspace/nixpkgs") { }; # or:
+# with import "../nixpkgs" { };
+# Note taht the above are not accessible during docker build
 let
   ideaLocal = stdenv.mkDerivation {
     name = "idea-local";
@@ -50,8 +53,8 @@ let
       sha256 = "d6b8217ce15f3ba61a1872b8b95f353fdde1f03f885a0eb99141e45ae7426516";
     };
   };
-in { scalaEnv = buildEnv {
-  name = "scala-env";
+in { brandonDevEnv = buildEnv {
+  name = "brandon-dev-env";
   paths = [
     ammonite
     ats # Needed to bootstrap ats2
