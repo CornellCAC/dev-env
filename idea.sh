@@ -14,7 +14,7 @@ echo "DOCKER cmd is $DOCKER"
 DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
 USER_ID=$(id -u "$(whoami)")
 GROUP_ID=$(id -g "$(whoami)")
-HOME_DIR=$(cut -d: -f6 < <(getent passwd ${USER_ID}))
+HOME_DIR=$(cut -d: -f6 < <(getent passwd "${USER_ID}"))
 #
 # Fixme: this is unsafe if building image within
 # the container the container, as you get $HOME_DIR/DevContainerHome/DevContainerHome
@@ -25,7 +25,7 @@ echo "WORK_DIR is ${WORK_DIR}"
 #
 # Create sync config dir owned by user if not already
 #
-mkdir -p $HOME_DIR_HOST/.config/syncthing
+mkdir -p "${HOME_DIR_HOST}/.config/syncthing"
 
 # Need to give the container access to your windowing system
 # Further reading: http://wiki.ros.org/docker/Tutorials/GUI
@@ -35,8 +35,8 @@ xhost +
 
 PULL="docker pull ${IDEA_IMAGE}"
 
-echo ${PULL}
-${PULL}
+echo "${PULL}"
+"${PULL}"
 
 #
 # Might consider using nvidia-docker instead of docker
@@ -66,18 +66,18 @@ CMD="${DOCKER} run --detach=true \
 #
 #                 --volume /var/run/dbus/system_bus_socket:/run/dbus/system_bus_socket \
 
-echo $CMD
+echo "$CMD"
 CONTAINER=$($CMD)
 
 # Minor post-configuration
 sleep 1s
-docker exec --user=root $CONTAINER groupadd -g $DOCKER_GROUP_ID docker
-WHO_AM_I=$(docker exec --user=$USER_ID $CONTAINER whoami)
+docker exec --user=root "$CONTAINER" groupadd -g "$DOCKER_GROUP_ID" docker
+WHO_AM_I=$(docker exec --user="$USER_ID" "$CONTAINER" whoami)
 echo "whoami is ${WHO_AM_I}"
 
-DBUS_UUID=$(docker exec $CONTAINER /bin/bash -i -c 'dbus-uuidgen')
-docker exec --user=root $CONTAINER bash -c "chmod u+w /etc/machine-id && \
+DBUS_UUID=$(docker exec "$CONTAINER" /bin/bash -i -c 'dbus-uuidgen')
+docker exec --user=root "$CONTAINER" bash -c "chmod u+w /etc/machine-id && \
     echo ${DBUS_UUID} > /etc/machine-id && \
     chmod u-w /etc/machine-id
 "
-docker attach $CONTAINER
+docker attach "$CONTAINER"
