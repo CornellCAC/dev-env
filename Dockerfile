@@ -95,8 +95,8 @@ COPY ./entrypoint $ENVSDIR/
 USER root
 
 # TODO: remove the python/pip bits if/when working in nix:
-RUN wget https://bootstrap.pypa.io/get-pip.py && python3.6 get-pip.py && \
-  python3.6 -m pip install pipenv --upgrade
+# RUN wget https://bootstrap.pypa.io/get-pip.py && python3.6 get-pip.py && \
+#   python3.6 -m pip install pipenv --upgrade
   
 RUN chown $nixuser:$nixuser $ENVSDIR/entrypoint
 USER $nixuser
