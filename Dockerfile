@@ -2,7 +2,7 @@
 FROM nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
 
 ARG nixuser
-ENV ENVSDIR /nixenv/$nixuser
+ARG ENVSDIR
 ENV HOME /home/$nixuser
 ENV HOME_TEMPLATE /template/$nixuser
 WORKDIR $ENVSDIR
@@ -47,6 +47,7 @@ RUN echo "nixbld:x:30000:nixbld1,nixbld2,nixbld3,nixbld4,nixbld5,nixbld6,nixbld7
 
 COPY ./config.nix $HOME/.config/nixpkgs/
 COPY ./dev-env.nix $ENVSDIR/
+COPY ./persist-env.sh $ENVSDIR/
 COPY ./.home_sync_ignore $HOME/
 RUN chown -R $nixuser:$nixuser $ENVSDIR $HOME
 
@@ -82,7 +83,7 @@ RUN $nixenv && nix-channel --update
 #
 # Initialize environment a bit for faster container spinup/use later
 #
-RUN $nixenv && cd /tmp && nix-env --fallback -if $ENVSDIR/dev-env.nix
+RUN $nixenv && cd /tmp && $ENVSDIR/persist-env.sh $ENVSDIR/dev-env.nix
 #
 RUN $nixenv && echo `which sbt`
 #

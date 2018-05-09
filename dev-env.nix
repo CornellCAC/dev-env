@@ -82,6 +82,7 @@ in { brandonDevEnv = buildEnv {
     libunwind
     maven
     mlton
+    nix
     nodejs-8_x
     openjdk
     openssh
@@ -97,6 +98,7 @@ in { brandonDevEnv = buildEnv {
     unzip
     # visualvm # character issues currently, likely needs idea-jdk
     vscode
+    which
     yarn
     zlib
 
