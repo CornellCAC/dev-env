@@ -92,6 +92,7 @@ in { brandonDevEnv = buildEnv {
     sbt
     scala
     shellcheck
+    singularity
     stdenv
     syncthing # for syncrhonizing data between containers
     tinycc # For ATS2 scripting
