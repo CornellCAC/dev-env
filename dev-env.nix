@@ -64,6 +64,7 @@ in { brandonDevEnv = buildEnv {
     boehmgc
     clang
     docker
+    docker_compose
     dotty # (Tentative Scala 3 compiler; see dottyLocal above for alternative)
     dbus # needed non-explicitly by vscode
     emacs
