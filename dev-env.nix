@@ -97,6 +97,7 @@ in { brandonDevEnv = buildEnv {
     stdenv
     syncthing # for syncrhonizing data between containers
     tinycc # For ATS2 scripting
+    tree
     unzip
     # visualvm # character issues currently, likely needs idea-jdk
     vscode

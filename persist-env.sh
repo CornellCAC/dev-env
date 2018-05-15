@@ -9,7 +9,17 @@ fi
 ENV_DRV=$(nix-instantiate "$1")
 cp "$ENV_DRV" ./env_backup.drv
 chmod u+rw ./env_backup.drv
+
+#
+# Use the following to restore an environment
+#
 nix-env --set "$ENV_DRV"
+
+#
+# Since nix-env --set isn't compatible with mutations like `nix-env -i foo`
+# we will use this in practice instead:
+#
+nix-env -if "$1"
 
 
 NIXPKGS_VERSION=$(nix-instantiate --eval '<nixpkgs/lib>' -A version)
