@@ -40,7 +40,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9
   apt -qqy install python3.6 python3.6-dev python3.6-venv && apt install -y -f && \
   apt clean
 
-RUN wget -O /usr/local/bin/mill https://github.com/lihaoyi/mill/releases/download/0.1.4/0.1.4 && \
+RUN wget -O /usr/local/bin/mill https://github.com/lihaoyi/mill/releases/download/0.2.0/0.2.0 && \
   chmod a+x /usr/local/bin/mill
 
 RUN echo "nixbld:x:30000:nixbld1,nixbld2,nixbld3,nixbld4,nixbld5,nixbld6,nixbld7,nixbld8,nixbld9,nixbld10,nixbld11,nixbld12,nixbld13,nixbld14,nixbld15,nixbld16,nixbld17,nixbld18,nixbld19,nixbld20,nixbld21,nixbld22,nixbld23,nixbld24,nixbld25,nixbld26,nixbld27,nixbld28,nixbld29,nixbld30" >> /etc/group \
