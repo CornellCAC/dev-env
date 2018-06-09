@@ -68,6 +68,7 @@ in { brandonDevEnv = buildEnv {
     dotty # (Tentative Scala 3 compiler; see dottyLocal above for alternative)
     dbus # needed non-explicitly by vscode
     emacs
+    es
     gdb
     git
     git-lfs
@@ -89,6 +90,7 @@ in { brandonDevEnv = buildEnv {
     openssh
     phantomjs2
     re2
+    ripgrep
     rsync
     sbt
     scala
