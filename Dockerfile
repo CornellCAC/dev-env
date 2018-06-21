@@ -10,23 +10,23 @@ WORKDIR $ENVSDIR
 
 MAINTAINER Brandon Barker <brandon.barker@cornell.edu>
 
+#
+# sudo doesn't work from nixpkgs when installed as a user, so install it here
+#
+RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
+  apt update -y && apt install -y --no-install-recommends sudo wget && \
+  wget -O spc.deb http://launchpadlibrarian.net/249551255/software-properties-common_0.96.20_all.deb && \
+  dpkg -i spc.deb; rm -f spc.deb && apt install -y -f && \
+  apt install -y --no-install-recommends bzip2 ca-certificates gcc wget && \
+  apt clean && \
+  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/
+
 RUN adduser --disabled-password --gecos "" $nixuser && \
   echo "$nixuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
   mkdir -m 0755 /nix && \
   mkdir -p $HOME_TEMPLATE && \
   mkdir -p /run/user/$(id -u $nixuser) && chown $nixuser:$nixuser /run/user/$(id -u $nixuser) && \
   chown -R $nixuser:$nixuser /nix $ENVSDIR $HOME $HOME_TEMPLATE
-
-#
-# TODO: remove GCC when moving back to nix python
-#
-RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
-  apt update -y && apt install -y --no-install-recommends wget && \
-  wget -O spc.deb http://launchpadlibrarian.net/249551255/software-properties-common_0.96.20_all.deb && \
-  dpkg -i spc.deb; rm -f spc.deb && apt install -y -f && \
-  apt install -y --no-install-recommends bzip2 ca-certificates gcc wget && \
-  apt clean && \
-  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/
 
 #
 # Pull Zulu OpenJDK and Python3.6 binaries from repositories:
