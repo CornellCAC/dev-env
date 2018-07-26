@@ -5,9 +5,9 @@
 # IDEA_IMAGE=${1:-kurron/docker-intellij:latest}
 
 DOCKER=docker
-if [ -x "$(command -v nvidia-docker)" ]; then
-    DOCKER=nvidia-docker
-fi
+# if [ -x "$(command -v nvidia-docker)" ]; then
+#    DOCKER=nvidia-docker
+#fi
 echo "DOCKER cmd is $DOCKER"
 
     
