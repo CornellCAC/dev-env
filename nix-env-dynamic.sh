@@ -20,7 +20,7 @@ function start_agent {
      echo succeeded
      chmod 600 "${SSH_ENV}"
      source "${SSH_ENV}" > /dev/null
-     ssh-add;
+     # ssh-add; # doesn't work normally under docker startup, call manually
 }
 #
 # Source SSH settings, if applicable
