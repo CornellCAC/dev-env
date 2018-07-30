@@ -34,3 +34,10 @@ if [ -f "${SSH_ENV}" ]; then
 else
      start_agent;
 fi
+
+#
+# Add "go get" to PATH for user
+# TODO: move to a shell-hook with go installed as part of the shell; preintall vgo
+#
+export PATH=$PATH:$HOME/go/bin
+
