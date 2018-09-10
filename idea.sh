@@ -5,9 +5,9 @@
 # IDEA_IMAGE=${1:-kurron/docker-intellij:latest}
 
 DOCKER=docker
-# if [ -x "$(command -v nvidia-docker)" ]; then
-#    DOCKER=nvidia-docker
-#fi
+if [ -x "$(command -v nvidia-docker)" ]; then
+  DOCKER=nvidia-docker
+fi
 echo "DOCKER cmd is $DOCKER"
 
     
@@ -37,11 +37,6 @@ PULL="docker pull ${IDEA_IMAGE}"
 
 echo "${PULL}"
 "${PULL}"
-
-#
-# Might consider using nvidia-docker instead of docker
-# once support is suomehow added for Ubuntu 16.04 (manually or inherited)
-#
 
 CMD="${DOCKER} run --detach=true \
                 --privileged \
@@ -81,3 +76,4 @@ docker exec --user=root "$CONTAINER" bash -c "chmod u+w /etc/machine-id && \
     chmod u-w /etc/machine-id
 "
 docker attach "$CONTAINER"
+

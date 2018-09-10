@@ -1,5 +1,11 @@
-FROM ubuntu:18.04
-# FROM nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
+#
+# All the opengl-variants currently misbehave
+#
+# FROM ubuntu:18.04
+# FROM nvidia/cudagl:9.2-devel-ubuntu16.04
+# FROM nvidia/opengl:1.0-glvnd-devel-ubuntu18.04
+FROM nvidia/cuda:9.2-cudnn7-devel-ubuntu18.04
+# FROM nvidia/cudagl:9.2-devel-ubuntu18.04
 
 ARG nixuser
 ARG ENVSDIR
@@ -11,13 +17,18 @@ WORKDIR $ENVSDIR
 MAINTAINER Brandon Barker <brandon.barker@cornell.edu>
 
 #
+# TODO, remove netbase: https://github.com/NixOS/nixpkgs/issues/39296
+#
+
+#
 # sudo doesn't work from nixpkgs when installed as a user, so install it here
 #
 RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
   apt update -y && apt install -y --no-install-recommends sudo wget && \
   wget -O spc.deb http://launchpadlibrarian.net/249551255/software-properties-common_0.96.20_all.deb && \
   dpkg -i spc.deb; rm -f spc.deb && apt install -y -f && \
-  apt install -y --no-install-recommends bzip2 ca-certificates gcc tzdata wget && \
+  DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends bzip2 \
+  ca-certificates gcc netbase tzdata wget && \
   apt clean && \
   wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/
 

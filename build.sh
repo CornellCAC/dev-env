@@ -2,7 +2,7 @@
 
 NIXUSER="$(whoami)"
 REPO=nix_ubuntu
-TAG=testing8
+TAG=testing9
 ENVSDIR="/nixenv/$NIXUSER"
 TEST_IMG="DevContainerTest"
 export IDEA_IMAGE="${REPO}:${TAG}"
