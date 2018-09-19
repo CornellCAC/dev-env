@@ -13,6 +13,23 @@ SET_DYNAMIC_ENV="source $HOME/workspace/docker-nix-intellij/nix-env-dynamic.sh"
 eval $SET_DYNAMIC_ENV
 grep -q -F "${SET_DYNAMIC_ENV}" $HOME/.bashrc || printf "\n$SET_DYNAMIC_ENV\n" >> $HOME/.bashrc
 
+read -r -d '' ACME_CD_PATCH <<- 'EOM'
+## ***ACME_CD_PATCH***
+## If inside Acme...
+if [ "$winid" ]; then
+  ## ... then patch the `cd` command
+  _cd () {
+    \cd "$@" && awd
+  }
+  alias cd=_cd
+
+  ## Customize a prompt inside Acme
+  export PS1='$ '
+fi
+EOM
+eval $ACME_CD_PATCH
+grep -q -F "ACME_CD_PATCH" $HOME/.bashrc || printf "\n$ACME_CD_PATCH\n" >> $HOME/.bashrc
+
 touch /tmp/syncthing.log
 mv -b /tmp/syncthing.log /tmp/syncthing.log.1
 syncthing -gui-address 0.0.0.0:8384 2>&1 > /tmp/syncthing.log &
