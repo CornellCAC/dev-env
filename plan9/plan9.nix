@@ -18,7 +18,7 @@ stdenv.mkDerivation {
     export PS1="[nix-shell:acme]$ "
     export PATH=$PATH:${./bin}
     _acme () {
-      \9 acme  -f ${plan9port}/plan9/font/luc/unicode.7.font "$@"
+      \9 acme  -F ${plan9port}/plan9/font/luc/unicode.7.font "$@"
     }
     alias acme=_acme
   '';
