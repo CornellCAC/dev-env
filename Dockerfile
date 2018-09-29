@@ -1,10 +1,10 @@
 #
 # All the opengl-variants currently misbehave
 #
-# FROM ubuntu:18.04
+FROM ubuntu:18.04
 # FROM nvidia/cudagl:9.2-devel-ubuntu16.04
 # FROM nvidia/opengl:1.0-glvnd-devel-ubuntu18.04
-FROM nvidia/cuda:9.2-cudnn7-devel-ubuntu18.04
+# FROM nvidia/cuda:9.2-cudnn7-devel-ubuntu18.04
 # FROM nvidia/cudagl:9.2-devel-ubuntu18.04
 
 ARG nixuser

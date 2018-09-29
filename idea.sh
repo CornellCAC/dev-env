@@ -54,6 +54,12 @@ CMD="${DOCKER} run --detach=true \
                 --volume $WORK_DIR:${WORK_DIR} \
                 --volume /tmp/.X11-unix:/tmp/.X11-unix \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
+                --volume /dev/snd:/dev/snd \
+                --volume /dev/shm:/dev/shm \
+                --volume /etc/machine-id:/etc/machine-id \
+                --volume /run/user/$USER_ID/pulse:/run/user/$USER_ID/pulse \
+                --volume /var/lib/dbus:/var/lib/dbus \
+                --volume $HOME_DIR_HOST/.pulse:$HOME_DIR/.pulse \
                 ${IDEA_IMAGE}"
 
 #
@@ -70,10 +76,11 @@ docker exec --user=root "$CONTAINER" groupadd -g "$DOCKER_GROUP_ID" docker
 WHO_AM_I=$(docker exec --user="$USER_ID" "$CONTAINER" whoami)
 echo "whoami is ${WHO_AM_I}"
 
-DBUS_UUID=$(docker exec "$CONTAINER" /bin/bash -i -c 'dbus-uuidgen')
-docker exec --user=root "$CONTAINER" bash -c "chmod u+w /etc/machine-id && \
-    echo ${DBUS_UUID} > /etc/machine-id && \
-    chmod u-w /etc/machine-id
-"
+#DBUS_UUID=$(docker exec "$CONTAINER" /bin/bash -i -c 'dbus-uuidgen')
+#docker exec --user=root "$CONTAINER" bash -c "chmod u+w /etc/machine-id && \
+#    echo ${DBUS_UUID} > /etc/machine-id && \
+#    chmod u-w /etc/machine-id
+#"
+
 docker attach "$CONTAINER"
 
