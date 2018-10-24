@@ -1,0 +1,2 @@
+#!/bin/sh
+export PATH=/nixenv/brandon/.nix-profile/bin:$PATH
