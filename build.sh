@@ -6,6 +6,10 @@ TAG=testing9
 ENVSDIR="/nixenv/$NIXUSER"
 TEST_IMG="DevContainerTest"
 export IDEA_IMAGE="${REPO}:${TAG}"
+
+#
+# Use --no-cache below to start a fresh build
+# 
 docker build \
        --build-arg nixuser="$NIXUSER" \
        --build-arg ENVSDIR="$ENVSDIR" \
