@@ -21,7 +21,12 @@ HOME_DIR=$(cut -d: -f6 < <(getent passwd "${USER_ID}"))
 #
 HOME_DIR_HOST="$HOME_DIR/DevContainerHome"
 WORK_DIR=${WORK_DIR:="$HOME_DIR/workspace"}
+WORK_DIR_AUX=${WORK_DIR_AUX:="$HOME_DIR/workspaceAux"}
+if [ ! -d "${WORK_DIR_AUX}" ]; then
+    WORK_DIR_AUX=${WORK_DIR}
+fi
 echo "WORK_DIR is ${WORK_DIR}"
+echo "WORK_DIR_AUX is ${WORK_DIR_AUX}"
 #
 # Create sync config dir owned by user if not already
 #
@@ -52,6 +57,7 @@ CMD="${DOCKER} run --detach=true \
                 --volume /usr/local/MATLAB/R2017b:/opt/MATLAB \
                 --volume $HOME_DIR_HOST:${HOME_DIR} \
                 --volume $WORK_DIR:${WORK_DIR} \
+                --volume $WORK_DIR_AUX:${WORK_DIR_AUX} \
                 --volume /tmp/.X11-unix:/tmp/.X11-unix \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
                 --volume /dev/snd:/dev/snd \
