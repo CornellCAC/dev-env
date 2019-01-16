@@ -30,7 +30,20 @@ EOM
 eval $ACME_CD_PATCH
 grep -q -F "ACME_CD_PATCH" $HOME/.bashrc || printf "\n$ACME_CD_PATCH\n" >> $HOME/.bashrc
 
-touch /tmp/syncthing.log
+mkdir -p "$HOME/.config/fontconfig"
+cat > "$HOME/.config/fontconfig/fonts.conf" <<-EOF
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <dir>~/.nix-profile/share/fonts</dir>
+</fontconfig>
+EOF
+fc-cache -f -v
+
+touch /tmp/syncthing.
+log
 mv -b /tmp/syncthing.log /tmp/syncthing.log.1
 syncthing -gui-address 0.0.0.0:8384 2>&1 > /tmp/syncthing.log &
+cd $HOME
 emacs -nw
+

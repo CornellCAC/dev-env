@@ -78,7 +78,7 @@ in { brandonDevEnv = buildEnv {
     gradle
     # herokuLocal # no stable versioning/checksum
     idea.idea-ultimate # disabled temporarily
-    idris
+    # idris # currently has trouble building
     # ideaLocal
     less
     libunwind
@@ -106,6 +106,11 @@ in { brandonDevEnv = buildEnv {
     which
     yarn
     zlib
+
+    #
+    # For spacemacs
+    #
+    source-code-pro
 
     #
     #Haskell/Eta support

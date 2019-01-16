@@ -115,5 +115,6 @@ RUN chown $nixuser:$nixuser $ENVSDIR/entrypoint
 USER $nixuser
 ENV PATH="${PATH}:/usr/local/bin"
 
-CMD ["./entrypoint"]
+WORKDIR $HOME
+CMD "$ENVSDIR/entrypoint"
 
