@@ -63,6 +63,7 @@ in { brandonDevEnv = buildEnv {
     # bash-completion # disabled, using system bash
     boehmgc
     clang
+    curl
     docker
     docker_compose
     dotty # (Tentative Scala 3 compiler; see dottyLocal above for alternative)
@@ -84,7 +85,7 @@ in { brandonDevEnv = buildEnv {
     libunwind
     maven
     mlton
-    nix
+    # nix # could cause conflicts
     nodejs-8_x
     openjdk
     openssh

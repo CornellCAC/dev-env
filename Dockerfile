@@ -84,6 +84,7 @@ RUN wget -O- http://nixos.org/releases/nix/nix-2.2.1/nix-2.2.1-x86_64-linux.tar.
 ENV \
     PATH=$ENVSDIR/.nix-profile/bin:$ENVSDIR/.nix-profile/sbin:/bin:/sbin:/usr/bin:/usr/sbin \
     GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt \
+    CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
     NIX_SSL_CERT_FILE=$GIT_SSL_CAINFO \
     NIX_PATH=/nix/var/nix/profiles/per-user/$nixuser/channels/
   
@@ -103,7 +104,16 @@ RUN $nixenv && echo `which sbt`
 #
 RUN $nixenv && printf 'exit\n' | sbt -Dsbt.global.base=.sbt -Dsbt.boot.directory=.sbt -Dsbt.ivy.home=.ivy2 && \
   rsync -a $HOME/ $HOME_TEMPLATE
-
+#
+# Install and configure cachix
+#
+# RUN $nixenv && echo "nixenvq is" && echo $(nix-env -q)
+# nix-env --set-flag priority 3 nix-2.2.1 && \
+RUN $nixenv && \
+  export USER=$nixuser && \
+  bash -c "bash <(curl -k https://nixos.org/nix/install)" && \
+  nix-env -iA cachix -f https://cachix.org/api/v1/install && \
+  cachix use hie-nix
 
 #Copy this last to prevent rebuilds when changes occur in entrypoint:
 COPY ./entrypoint $ENVSDIR/

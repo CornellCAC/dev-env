@@ -13,7 +13,7 @@ chmod u+rw ./env_backup.drv
 #
 # Use the following to restore an environment
 #
-nix-env --set "$ENV_DRV"
+# nix-env --set "$ENV_DRV"
 
 #
 # Since nix-env --set isn't compatible with mutations like `nix-env -i foo`
