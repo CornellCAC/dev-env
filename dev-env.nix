@@ -116,6 +116,7 @@ in { brandonDevEnv = buildEnv {
     #Haskell/Eta support
     #
     ghc # use stack instead, once working
+    cabal-install
     stack # The Haskell tool stack
     haskellPackages.hpack
     

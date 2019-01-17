@@ -30,7 +30,9 @@ RUN echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null && \
   DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends bzip2 \
   ca-certificates gcc netbase tzdata wget && \
   apt clean && \
-  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/
+  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -P /etc/bash_completion.d/ && \
+  mkdir /etc/nix && \
+  echo 'sandbox = false' > /etc/nix/nix.conf
 
 RUN adduser --disabled-password --gecos "" $nixuser && \
   echo "$nixuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
@@ -71,7 +73,7 @@ RUN apt install -y --no-install-recommends x11-apps && \
 
 USER $nixuser
 
-RUN wget -O- http://nixos.org/releases/nix/nix-2.1.3/nix-2.1.3-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
+RUN wget -O- http://nixos.org/releases/nix/nix-2.2.1/nix-2.2.1-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
     && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install \
     && ln -s /nix/var/nix/profiles/per-user/$nixuser/profile $HOME/.nix-profile
 
@@ -87,8 +89,8 @@ ENV \
   
 ENV nixenv ". $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
 
-RUN $nixenv && nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs && \
-  nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+RUN $nixenv && nix-channel --add https://nixos.org/channels/nixos-18.09 nixpkgs && \
+  nix-channel --add https://nixos.org/channels/nixos-18.09 nixos
   
 RUN $nixenv && nix-channel --update
 
