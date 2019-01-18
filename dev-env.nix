@@ -38,6 +38,20 @@ let
       sha256 = "1359843e19ac25b1dc465bfb61d84aeb507476bca57a46d90a111454e123ab29";
     };
   };
+ ncursesLocal = stdenv.mkDerivation {
+    name = "ncurses-local";
+    buildInputs =  [ncurses];
+    builder = builtins.toFile "builder.sh" ''
+      source $stdenv/setup
+      mkdir -p $out
+    '';
+    src = null;
+    installPhase = ''
+      # Hack around lack of libtinfo in NixOS
+      ln -s ${ncurses.out}/lib/libncursesw.so.5 $out/lib/libtinfo.so.5
+      ln -s ${stdenv.cc.libc}/lib/libpthread.so.0 $out/lib/libpthread.so.0
+    '';
+  };
   herokuLocal = stdenv.mkDerivation {
     name = "heroku-local";
     buildInputs =  [ ];
@@ -86,6 +100,7 @@ in { brandonDevEnv = buildEnv {
     maven
     mlton
     # nix # could cause conflicts
+    ncursesLocal
     nodejs-8_x
     openjdk
     openssh
@@ -118,9 +133,17 @@ in { brandonDevEnv = buildEnv {
     #
     ghc # use stack instead, once working
     cabal-install
+    direnv # for nix-shell/emacs integration
     stack # The Haskell tool stack
+    # haskellPackages.ghc-mod # currently broken due to broken cabal-helper
+    # haskellPackages.codex # works with hasktags; currently broken
+    haskellPackages.hasktags
+    haskellPackages.hoogle
+    # haskellPackages.hoogle-index # currently broken due to missing deps
     haskellPackages.hpack
-    
+    haskellPackages.hlint
+    # haskellPackages.intero # fails, but works with cabal install ...
+    haskellPackages.stylish-haskell
     #
     # Python support
     #
