@@ -113,7 +113,8 @@ RUN $nixenv && \
   export USER=$nixuser && \
   bash -c "bash <(curl -k https://nixos.org/nix/install)" && \
   nix-env -iA cachix -f https://cachix.org/api/v1/install && \
-  cachix use hie-nix
+  cachix use hie-nix && \
+  nix-env -iA hies -f https://github.com/domenkozar/hie-nix/tarball/master
 
 #Copy this last to prevent rebuilds when changes occur in entrypoint:
 COPY ./entrypoint $ENVSDIR/
