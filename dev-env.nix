@@ -71,8 +71,6 @@ in { brandonDevEnv = buildEnv {
   name = "brandon-dev-env";
   paths = [
     ammonite
-    ats # Needed to bootstrap ats2
-    # ats2 # Plan to use bleeding edge for now
     awscli
     # bash-completion # disabled, using system bash
     boehmgc
@@ -114,7 +112,6 @@ in { brandonDevEnv = buildEnv {
     singularity
     stdenv
     syncthing # for syncrhonizing data between containers
-    tinycc # For ATS2 scripting
     tree
     unzip
     # visualvm # character issues currently, likely needs idea-jdk
