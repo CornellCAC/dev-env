@@ -12,3 +12,4 @@
 /.nix*
 /nix-*
 /.stack
+!/.stack/config.yaml
