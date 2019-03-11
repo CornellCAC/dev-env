@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # use the time as a tag
 UNIXTIME=$(date +%s)

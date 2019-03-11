@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 SOURCE_NIX="source $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
 ${SOURCE_NIX}
 rsync -a $HOME_TEMPLATE/ $HOME

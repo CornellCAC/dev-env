@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$1" ] || [ "${1: -4}" != ".nix" ] || [ ! -f "$1" ]
   then

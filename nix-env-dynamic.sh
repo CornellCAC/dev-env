@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 BASH_COMPLETIONS="source /etc/bash_completion.d/*.bash"
 eval "$BASH_COMPLETIONS"

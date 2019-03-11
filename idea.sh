@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Launches IntelliJ IDEA inside a Docker container
 

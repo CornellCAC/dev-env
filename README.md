@@ -10,6 +10,18 @@ Type `docker-compose build` to build the image.
 
 Alternatively run `source build.sh`.
 
+## Using directly in NixOS
+
+This is a work in progress.
+
+### Installing packages
+
+```
+mkdir -p ~/.config/nixpkgs
+cp config.nix  ~/.config/nixpkgs/
+./persist-env.sh dev-env.nix
+```
+
 # Installation
 Docker will automatically install the newly built image into the cache.
 
