@@ -73,7 +73,7 @@ RUN apt install -y --no-install-recommends x11-apps && \
 
 USER $nixuser
 
-RUN wget -O- http://nixos.org/releases/nix/nix-2.2.1/nix-2.2.1-x86_64-linux.tar.bz2 | bzcat - | tar xf - \
+RUN wget -O- https://nixos.org/releases/nix/nix-2.3.1/nix-2.3.1-x86_64-linux.tar.xz | tar xJf - \
     && USER=$nixuser HOME=$ENVSDIR sh nix-*-x86_64-linux/install \
     && ln -s /nix/var/nix/profiles/per-user/$nixuser/profile $HOME/.nix-profile
 
@@ -90,8 +90,8 @@ ENV \
   
 ENV nixenv ". $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
 
-RUN $nixenv && nix-channel --add https://nixos.org/channels/nixos-18.09 nixpkgs && \
-  nix-channel --add https://nixos.org/channels/nixos-18.09 nixos
+RUN $nixenv && nix-channel --add https://nixos.org/channels/nixos-19.09 nixpkgs && \
+  nix-channel --add https://nixos.org/channels/nixos-19.09 nixos
   
 RUN $nixenv && nix-channel --update
 

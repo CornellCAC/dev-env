@@ -78,7 +78,7 @@ in { brandonDevEnv = buildEnv {
     curl
     docker
     docker_compose
-    dotty # (Tentative Scala 3 compiler; see dottyLocal above for alternative)
+    # dotty # (Tentative Scala 3 compiler; see dottyLocal above for alternative)
     dbus # needed non-explicitly by vscode
     emacs
     es
@@ -99,7 +99,7 @@ in { brandonDevEnv = buildEnv {
     mlton
     # nix # could cause conflicts
     ncursesLocal
-    nodejs-8_x
+    nodejs-10_x
     openjdk
     openssh
     phantomjs2
@@ -163,9 +163,9 @@ in { brandonDevEnv = buildEnv {
   # TODO: better filter, use ammonite script?:
   postBuild = ''
     # we remove a dead symbolic link, which currently causes nix to break:
-    if [ ! -e $out/lib/libunwind-generic.a ] ; then
-      rm $out/lib/libunwind-generic.a
-    fi
+    # if [ ! -e $out/lib/libunwind-generic.a ] ; then
+    #  rm $out/lib/libunwind-generic.a
+    # fi
   # for f in $(ls -d $out/bin/* | grep "idea"); do
   #   sed -i '/IDEA_JDK/d' $f
   #   wrapProgram $f \
