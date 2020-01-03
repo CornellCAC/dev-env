@@ -14,6 +14,29 @@ Alternatively run `source build.sh`.
 
 This is a work in progress.
 
+## Caveats for WSL
+
+This works in WSL2, however, there are a few issues to be aware of.
+
+1. Syncthing is disabled in WSL, due to networking issues. This might
+be possible to fix in the future. For now, the workaround is to use
+Syncthing installed from Windows. Just point it to DevContainerHome,
+and use when setting the configuration for that folder in Syncthing,
+copy the ignore rules from `.home_sync_ignore`.
+2. Since `DevContainerHome` will be stored in a windows drive,
+you may need to fix ownership issues. You can run the `sshPermsForWin.ps1`
+script to fix ownership. See [here](https://superuser.com/questions/1296024/windows-ssh-permissions-for-private-key-are-too-open/1488937#1488937)
+for more information. Note: you may need to edit the script to point to the right folder(s).
+3. Finally, in your WSL distro, you'll need to edit (or create) `/etc/wsl.conf` and add the following:
+
+```
+[automount]
+options = "metadata"
+```
+
+[reference](https://superuser.com/questions/1323645/unable-to-change-file-permissions-on-ubuntu-bash-for-windows-10).
+
+
 ### Installing packages
 
 ```

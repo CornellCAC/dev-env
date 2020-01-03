@@ -43,7 +43,11 @@ fc-cache -f -v
 touch /tmp/syncthing.
 log
 mv -b /tmp/syncthing.log /tmp/syncthing.log.1
-syncthing -gui-address 0.0.0.0:8384 2>&1 > /tmp/syncthing.log &
+if grep -qi Microsoft /proc/version; then
+    echo "WSL detected; not starting syncthing (use Syncthing on Windows)"
+else
+    syncthing -gui-address 0.0.0.0:8384 2>&1 > /tmp/syncthing.log &
+fi
 cd $HOME
 emacs -nw
 
