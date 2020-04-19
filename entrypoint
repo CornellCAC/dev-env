@@ -30,6 +30,10 @@ EOM
 eval $ACME_CD_PATCH
 grep -q -F "ACME_CD_PATCH" $HOME/.bashrc || printf "\n$ACME_CD_PATCH\n" >> $HOME/.bashrc
 
+SET_TERM="export TERM=screen"
+eval $SET_TERM
+grep -q -F "${SET_TERM}" $HOME/.bashrc || printf "\n$SET_TERM\n" >> $HOME/.bashrc
+
 mkdir -p "$HOME/.config/fontconfig"
 cat > "$HOME/.config/fontconfig/fonts.conf" <<-EOF
 <?xml version="1.0"?>
