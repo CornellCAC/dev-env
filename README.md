@@ -34,8 +34,10 @@ for more information. Note: you may need to edit the script to point to the righ
 options = "metadata"
 ```
 
-[reference](https://superuser.com/questions/1323645/unable-to-change-file-permissions-on-ubuntu-bash-for-windows-10).
+[reference for file permissions](https://superuser.com/questions/1323645/unable-to-change-file-permissions-on-ubuntu-bash-for-windows-10).
 
+This repository also supports built-in support for X in WSL2, though additional security configuration
+[may be necessary for](https://stackoverflow.com/a/61110604/3096687) your X server.
 
 ### Installing packages
 

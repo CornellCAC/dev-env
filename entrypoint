@@ -34,6 +34,14 @@ SET_TERM="export TERM=screen"
 eval $SET_TERM
 grep -q -F "${SET_TERM}" $HOME/.bashrc || printf "\n$SET_TERM\n" >> $HOME/.bashrc
 
+#Primarily for WSL2's benefit; don't think this is useful elsewhere
+if [[ $(uname -a) == *microsoft* ]]; then
+  SET_DISPLAY="export DISPLAY=\$(awk '/nameserver / {print \$2; exit}' /etc/resolv.conf 2>/dev/null):0"
+  SET_LIBGL="export LIBGL_ALWAYS_INDIRECT=1"
+  grep -q -F "${SET_DISPLAY}" $HOME/.bashrc || printf "\n$SET_DISPLAY\n" >> $HOME/.bashrc
+  grep -q -F "${SET_LIBGL}" $HOME/.bashrc || printf "\n$SET_LIBGL\n" >> $HOME/.bashrc
+fi
+
 mkdir -p "$HOME/.config/fontconfig"
 cat > "$HOME/.config/fontconfig/fonts.conf" <<-EOF
 <?xml version="1.0"?>
