@@ -1,2 +1,2 @@
-nixpkgs: "20.03.1879.91cdcf31357"
-nixos: "20.03.1879.91cdcf31357"
+nixpkgs: "21.03pre243854.2a14d21224f"
+nixos: 

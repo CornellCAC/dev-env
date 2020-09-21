@@ -1,9 +1,23 @@
 # Overview
-This project allows users to create a highly customized development environment in a Docker container that can be recreated with a high degree of reproducibility using Docker and Nix. Graphical applications are also supported: currently IntelliJ and Visual Studio Code have been tested. The Container makes use of Syncthing to securely and efficiently synchronize semi-transient configuration and data (e.g. IDE settings and plugins, credentials and environment settings) between multiple instantiations of the container on different system.
+This project allows users to create a highly customized development environment in a Docker container or directly with Nix, and as such, can be recreated with a high
+degree of reproducibility using Docker and/or Nix. Graphical applications are also
+supported: currently IntelliJ and Visual Studio Code have been tested. The Container
+makes use of Syncthing to securely and efficiently synchronize semi-transient
+configuration and data (e.g. IDE settings and plugins, credentials and environment
+settings) between multiple instantiations of the container on different system.
 
 # Prerequisites
 * a working [Docker](http://docker.io) engine
 * a working [Docker Compose](http://docker.io) installation
+* [for Windows] WSL2 and Docker-Desktop
+* [for Windows, optional] a Windows installation of Syncthing
+
+# Using without Docker
+If you are already using Nix or can use it directly without the need for docker,
+just run `./containerless.sh` from this directory. This uses many of the same
+scripts as with the Docker instructions, so it will also start `emacs`
+at the end. But, you can feel free to exit emacs immediately in
+this case (whereas for Docker, `emacs` is the `entrypoint` process.)
 
 # Building
 Type `docker-compose build` to build the image.
@@ -17,6 +31,9 @@ This is a work in progress.
 ## Caveats for WSL
 
 This works in WSL2, however, there are a few issues to be aware of.
+**Note**: if using WSL2+Nix directly instead of WSL2+Docker, your
+WSL2 home directory will look something like `\\wsl$\Ubuntu\home\brandon`, which Syncthing appears to be able to recognize, so you don't need to create
+a separate `DevContainerHome` as discussed below.
 
 1. Syncthing is disabled in WSL, due to networking issues. This might
 be possible to fix in the future. For now, the workaround is to use
@@ -38,6 +55,38 @@ options = "metadata"
 
 This repository also supports built-in support for X in WSL2, though additional security configuration
 [may be necessary for](https://stackoverflow.com/a/61110604/3096687) your X server.
+
+### Visual Studio Code in WSL2
+
+By running the `code` command in WSL2 (*not* inside of a container),
+integration for using the Windows installation of VS Code will be
+installed, so that you do not need a separate Linux/X11-based installation
+of VS Code.
+
+Make sure the `Remote - WSL` extension is installed in VS Code once it is running.
+Next install the `Remote - Containers` extension (you may also be interested in
+`Remote - SSH` if you sometimes would like to perform development remotely;
+all of these extensions are by Microsoft.)
+
+Note that for VS Code to be able to see your WSL2/Docker containers, you **also**
+need to have [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/)
+installed (ref)[https://code.visualstudio.com/blogs/2020/03/02/docker-in-wsl2].
+After installing, make sure to go to `Settings -> Resources -> WSL Integration`, and enable
+for your distribution of choice. Then click `Apply & Restart`.
+
+After performing some of the above steps, you may run into the error when starting the container:
+
+```
+docker: Error response from daemon: cgroups: cannot find cgroup mount destination: unknown.
+```
+
+[The fix](https://github.com/docker/for-linux/issues/219) is to run these two commands before starting the container:
+
+```
+sudo mkdir /sys/fs/cgroup/systemd
+sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
+```
+
 
 ### Installing packages
 
@@ -65,7 +114,7 @@ The image launches several processes (see the `entrypoint` script), but the fina
 
 ### Docker Compose
 
-`docker-compose up` will launch the image allowing you to begin working on projects. The Docker Compose file is configured to mount your home directory into the container.  
+`docker-compose up` will launch the image allowing you to begin working on projects. The Docker Compose file is configured to mount your home directory into the container.
 
 Alternatively run `./idea.sh` directly.
 

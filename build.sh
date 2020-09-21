@@ -8,7 +8,7 @@ TEST_IMG="DevContainerTest"
 
 #
 # Use --no-cache below to start a fresh build
-# 
+#
 docker build \
        --build-arg nixuser="$NIXUSER" \
        --build-arg ENVSDIR="$ENVSDIR" \

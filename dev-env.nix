@@ -115,7 +115,8 @@ in { brandonDevEnv = buildEnv {
     tree
     unzip
     # visualvm # character issues currently, likely needs idea-jdk
-    vscode
+    # vscode # we no longer install vscode by default due to how WSL2 provides Windows code,
+             # though we note it can it could always be used via `nix-shell -p vscode` if desired
     which
     yarn
     zlib
@@ -151,7 +152,7 @@ in { brandonDevEnv = buildEnv {
     # python36Packages.ipython
     # nixpip # installed seperately: https://github.com/badi/nix-pip
     mypy
-    
+
   ];
   # builder = builtins.toFile "builder.sh" ''
   #   source $stdenv/setup

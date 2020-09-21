@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+running_in_docker() {
+  (awk -F/ '$2 == "docker"' /proc/self/cgroup | read non_empty_input)
+}
+
 SOURCE_NIX="source $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
 ${SOURCE_NIX}
 rsync -a $HOME_TEMPLATE/ $HOME
@@ -9,9 +14,11 @@ grep -q -F "${PS1_MOD}" $HOME/.bashrc || printf "\n$PS1_MOD\n" >> $HOME/.bashrc
 touch $HOME/.stignore && \
 grep -q -F '#include .home_sync_ignore' $HOME/.stignore || echo '#include .home_sync_ignore' >> $HOME/.stignore
 
-SET_DYNAMIC_ENV="source $HOME/workspace/docker-nix-intellij/nix-env-dynamic.sh"
-eval $SET_DYNAMIC_ENV
-grep -q -F "${SET_DYNAMIC_ENV}" $HOME/.bashrc || printf "\n$SET_DYNAMIC_ENV\n" >> $HOME/.bashrc
+if grep -q docker /proc/self/cgroup; then
+  SET_DYNAMIC_ENV="source $HOME/workspace/docker-nix-intellij/nix-env-dynamic.sh"
+  eval $SET_DYNAMIC_ENV
+  grep -q -F "${SET_DYNAMIC_ENV}" $HOME/.bashrc || printf "\n$SET_DYNAMIC_ENV\n" >> $HOME/.bashrc
+fi
 
 read -r -d '' ACME_CD_PATCH <<- 'EOM'
 ## ***ACME_CD_PATCH***
@@ -55,11 +62,11 @@ fc-cache -f -v
 touch /tmp/syncthing.
 log
 mv -b /tmp/syncthing.log /tmp/syncthing.log.1
-if grep -qi Microsoft /proc/version; then
-    echo "WSL detected; not starting syncthing (use Syncthing on Windows)"
-else
-    syncthing -gui-address 0.0.0.0:8384 2>&1 > /tmp/syncthing.log &
-fi
+#if grep -qi Microsoft /proc/version; then
+#    echo "WSL detected; not starting syncthing (use Syncthing on Windows)"
+#else
+syncthing -gui-address 0.0.0.0:8384 2>&1 > /tmp/syncthing.log &
+#fi
 cd $HOME
 emacs -nw
 

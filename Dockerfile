@@ -14,8 +14,6 @@ ENV HOME /home/$nixuser
 ENV HOME_TEMPLATE /template/$nixuser
 WORKDIR $ENVSDIR
 
-MAINTAINER Brandon Barker <brandon.barker@cornell.edu>
-
 #
 # TODO, remove netbase: https://github.com/NixOS/nixpkgs/issues/39296
 #
@@ -80,19 +78,19 @@ RUN wget -O- https://nixos.org/releases/nix/nix-2.3.4/nix-2.3.4-x86_64-linux.tar
 #
 # This broke at some point, so trying system certs for now:
 # GIT_SSL_CAINFO=$ENVSDIR/.nix-profile/etc/ssl/certs/ca-bundle.crt \
-# 
+#
 ENV \
     PATH=$ENVSDIR/.nix-profile/bin:$ENVSDIR/.nix-profile/sbin:/bin:/sbin:/usr/bin:/usr/sbin \
     GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt \
     CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
     NIX_SSL_CERT_FILE=$GIT_SSL_CAINFO \
     NIX_PATH=/nix/var/nix/profiles/per-user/$nixuser/channels/
-  
+
 ENV nixenv ". $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
 
 RUN $nixenv && nix-channel --add https://nixos.org/channels/nixos-20.03 nixpkgs && \
   nix-channel --add https://nixos.org/channels/nixos-20.03 nixos
-  
+
 RUN $nixenv && nix-channel --update
 
 #
@@ -113,7 +111,7 @@ RUN $nixenv && \
   export USER=$nixuser && \
   bash -c "bash <(curl -k https://nixos.org/nix/install)" && \
   nix-env -iA cachix -f https://cachix.org/api/v1/install && \
-  cachix use hie-nix && \
+  cachix use all-hies && \
   nix-env -iA hies -f https://github.com/domenkozar/hie-nix/tarball/master
 
 #Copy this last to prevent rebuilds when changes occur in entrypoint:
@@ -123,7 +121,7 @@ USER root
 # TODO: remove the python/pip bits if/when working in nix:
 # RUN wget https://bootstrap.pypa.io/get-pip.py && python3.6 get-pip.py && \
 #   python3.6 -m pip install pipenv --upgrade
-  
+
 RUN chown $nixuser:$nixuser $ENVSDIR/entrypoint
 USER $nixuser
 ENV PATH="${PATH}:/usr/local/bin"
