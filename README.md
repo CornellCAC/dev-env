@@ -33,7 +33,8 @@ This is a work in progress.
 This works in WSL2, however, there are a few issues to be aware of.
 **Note**: if using WSL2+Nix directly instead of WSL2+Docker, your
 WSL2 home directory will look something like `\\wsl$\Ubuntu\home\brandon`, which Syncthing appears to be able to recognize, so you don't need to create
-a separate `DevContainerHome` as discussed below.
+a separate `DevContainerHome` as discussed below, though you may
+still need step 3 (editing `/etc/wsl.conf`).
 
 1. Syncthing is disabled in WSL, due to networking issues. This might
 be possible to fix in the future. For now, the workaround is to use
@@ -126,7 +127,7 @@ Alternatively run `./idea.sh` directly.
 
 ### Using Nix
 
-A nix expression that defines the development environment (or individual expressiosn defining more specific environments) can be updated and managed in this git repo (or other git repos) without any need to worry about rebuilding the docker image, and without any loss in reproducibility. For instance:
+A nix expression that defines the development environment (or individual expression defining more specific environments) can be updated and managed in this git repo (or other git repos) without any need to worry about rebuilding the docker image, and without any loss in reproducibility. For instance:
 
 ```sh
 # link to mounted volume repo:
@@ -145,7 +146,7 @@ We can think of data as being in several categories:
 In general, things in category (1) should always be managed with version control and/or backed up, depending on the type of data.
 The same might be true for much of version (2), though we take the approach of assuming Synchthing will handle it initially for
 convenience, and if the configuration is deemed to be of high-value, it may be elevated to the persistent category and handled
-by version control (e.g., by modifiying a Dockerfile, Nix expression, etc that is maintained by version control).
+by version control (e.g., by modifying a Dockerfile, Nix expression, etc that is maintained by version control).
 
 It is probably best to not use Syncthing and version-control on the same files, as one might clobber the other (imagine you forgot to commit some files at home, and then you go in to work the next day and start editing, only to have the same file at home overwritten by Syncthing).
 
@@ -154,11 +155,11 @@ Categories (1) and (2) should generally be stored on the host and mounted in the
 # Troubleshooting
 
 ## User Account
-The image assumes that the account running the continer will have a user and group id of 1000:1000.  This allows the container 
+The image assumes that the account running the continer will have a user and group id of 1000:1000.  This allows the container
 to save files in your home directory and keep the proper permissions.
 
 ## X-Windows
-If the image complains that it cannot connect to your X server, simply run `xhost +` to allow the container to connect 
+If the image complains that it cannot connect to your X server, simply run `xhost +` to allow the container to connect
 to your X server.
 
 # License and Credits
