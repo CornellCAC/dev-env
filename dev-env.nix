@@ -90,7 +90,7 @@ in { brandonDevEnv = buildEnv {
     gnupg
     gradle
     # herokuLocal # no stable versioning/checksum
-    idea.idea-ultimate # disabled temporarily
+    # idea.idea-ultimate # disabled temporarily
     # idris # currently has trouble building
     # ideaLocal
     less
