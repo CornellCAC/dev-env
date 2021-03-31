@@ -123,6 +123,9 @@ Alternatively run `./idea.sh` directly.
 
 [Syncthing](https://syncthing.net/) is used to maintain the user environment between multiple machines. Once your container is running, you should be able to visit [http://localhost:8384/](http://localhost:8384/) from a browser on the system hosting the container to configure sync. You'll want to follow the basic Syncthing instructions on how to connect systems. The home directory will be synchronized except from some files (see `.home_sync_ignore` and `.stignore` in your home directory). Be sure to add the home directory (e.g., `/home/brandon`) on each system as the same `Folder ID` in Syncthing so that the will be matched together by Syncthing and kept up-to-date.
 
+If using the containerless environment, you may want to configure your OS to start Syncthing at boot.
+A modified version of the Syncthing systemd [service file](https://github.com/syncthing/syncthing/blob/0dcd9794d4315efcad42d9d6f850e806defd889e/etc/linux-systemd/system/syncthing@.service) is contained in this repository. For more information, see the [syncthing docs](https://docs.syncthing.net/users/autostart.html#using-systemd).
+
 ## Updating the environment
 
 ### Using Nix
@@ -143,10 +146,14 @@ We can think of data as being in several categories:
 2. Semi-transient - environment, configuration settings, editor plugins
 3. Temporary - cached packages and artifacts, anything we don't want
 
-In general, things in category (1) should always be managed with version control and/or backed up, depending on the type of data.
-The same might be true for much of version (2), though we take the approach of assuming Synchthing will handle it initially for
-convenience, and if the configuration is deemed to be of high-value, it may be elevated to the persistent category and handled
-by version control (e.g., by modifying a Dockerfile, Nix expression, etc that is maintained by version control).
+In general, things in category (1) should always be managed with
+version control and/or backed up, depending on the type of data.  The
+same might be true for much of version (2), though we take the
+approach of assuming Synchthing will handle it initially for
+convenience, and if the configuration is deemed to be of high-value,
+it may be elevated to the persistent category and handled by version
+control (e.g., by modifying a Dockerfile, Nix expression, etc that is
+maintained by version control).
 
 It is probably best to not use Syncthing and version-control on the same files, as one might clobber the other (imagine you forgot to commit some files at home, and then you go in to work the next day and start editing, only to have the same file at home overwritten by Syncthing).
 
