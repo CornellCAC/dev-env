@@ -19,6 +19,16 @@ scripts as with the Docker instructions, so it will also start `emacs`
 at the end. But, you can feel free to exit emacs immediately in
 this case (whereas for Docker, `emacs` is the `entrypoint` process.)
 
+If using nix outside of NixOS, you may want to remove the nix reference
+added to `~/.profile` as this seems redundant with the conditional variant
+added to ~/.bashrc`, which we can selectively disable by starting a login
+shell without nix, e.g.:
+
+```
+env -i HOME="$HOME" USER="$USER" NO_NIX=1 bash -l
+```
+
+
 # Building
 Type `docker-compose build` to build the image.
 

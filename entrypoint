@@ -4,7 +4,11 @@ running_in_docker() {
   (awk -F/ '$2 == "docker"' /proc/self/cgroup | read non_empty_input)
 }
 
-SOURCE_NIX="source $ENVSDIR/.nix-profile/etc/profile.d/nix.sh"
+read -r -d '' SOURCE_NIX <<- 'EOM'
+if [ -z ${NO_NIX} ]; then
+    source /home/brandon/.nix-profile/etc/profile.d/nix.sh
+fi
+EOM
 ${SOURCE_NIX}
 rsync -a $HOME_TEMPLATE/ $HOME
 grep -q -F "${SOURCE_NIX}" $HOME/.bashrc || printf "\n$SOURCE_NIX\n" >> $HOME/.bashrc
