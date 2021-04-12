@@ -90,7 +90,7 @@ in { brandonDevEnv = buildEnv {
     gnupg
     gradle
     # herokuLocal # no stable versioning/checksum
-    idea.idea-ultimate # disabled temporarily
+    # idea.idea-ultimate # disabled temporarily due to runtime issues
     # idris # currently has trouble building
     # ideaLocal
     less
@@ -153,6 +153,11 @@ in { brandonDevEnv = buildEnv {
     # nixpip # installed seperately: https://github.com/badi/nix-pip
     mypy
 
+    #
+    # Rust support
+    #
+    rustup
+    # cargo # collides with rustup here, but can be installed via rustup
   ];
   # builder = builtins.toFile "builder.sh" ''
   #   source $stdenv/setup
