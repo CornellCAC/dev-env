@@ -4,17 +4,21 @@ running_in_docker() {
   (awk -F/ '$2 == "docker"' /proc/self/cgroup | read non_empty_input)
 }
 
+rsync -a $HOME_TEMPLATE/ $HOME
+
 read -r -d '' SOURCE_NIX <<- 'EOM'
 if [ -z ${NO_NIX} ]; then
     source /home/brandon/.nix-profile/etc/profile.d/nix.sh
 fi
 EOM
-${SOURCE_NIX}
-rsync -a $HOME_TEMPLATE/ $HOME
-grep -q -F "${SOURCE_NIX}" $HOME/.bashrc || printf "\n$SOURCE_NIX\n" >> $HOME/.bashrc
+eval $SOURCE_NIX
+# grep -q -F "${SOURCE_NIX}" $HOME/.bashrc || printf "\n$SOURCE_NIX\n" >> $HOME/.bashrc
+printf "\n$SOURCE_NIX\n" >> $HOME/.bashrc
+
 PS1_MOD='export PS1='\''\u@\h-DevContainer:\w\n\$ '\'''
 eval $PS1_MOD
 grep -q -F "${PS1_MOD}" $HOME/.bashrc || printf "\n$PS1_MOD\n" >> $HOME/.bashrc
+
 touch $HOME/.stignore && \
 grep -q -F '#include .home_sync_ignore' $HOME/.stignore || echo '#include .home_sync_ignore' >> $HOME/.stignore
 
@@ -41,6 +45,7 @@ EOM
 eval $ACME_CD_PATCH
 grep -q -F "ACME_CD_PATCH" $HOME/.bashrc || printf "\n$ACME_CD_PATCH\n" >> $HOME/.bashrc
 
+
 SET_TERM="export TERM=screen"
 eval $SET_TERM
 grep -q -F "${SET_TERM}" $HOME/.bashrc || printf "\n$SET_TERM\n" >> $HOME/.bashrc
@@ -63,8 +68,7 @@ cat > "$HOME/.config/fontconfig/fonts.conf" <<-EOF
 EOF
 fc-cache -f -v
 
-touch /tmp/syncthing.
-log
+touch /tmp/syncthing.log
 mv -b /tmp/syncthing.log /tmp/syncthing.log.1
 #if grep -qi Microsoft /proc/version; then
 #    echo "WSL detected; not starting syncthing (use Syncthing on Windows)"
