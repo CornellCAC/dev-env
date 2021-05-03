@@ -108,10 +108,12 @@ in { brandonDevEnv = buildEnv {
     rsync
     sbt
     scala
+    scalafmt
     shellcheck
     singularity
     stdenv
     syncthing # for syncrhonizing data between containers
+    tmux
     tree
     unzip
     # visualvm # character issues currently, likely needs idea-jdk
